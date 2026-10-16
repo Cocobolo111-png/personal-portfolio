@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { HeroArtwork } from '../components/HeroArtwork'
 import { heroChapters } from '../data/hero'
-import { profile } from '../data/profile'
 
 export function HeroSection() {
   const [active, setActive] = useState(0)
@@ -44,7 +43,7 @@ export function HeroSection() {
   }
 
   return (
-    <section ref={hero} className={`intro${active === 0 ? ' intro--who' : ''}`} id="top" aria-labelledby="hero-heading">
+    <section ref={hero} className={`intro intro--${chapter.id}`} id="top" aria-labelledby="hero-heading">
       <div className="intro__body">
         <div className="intro-tabs" role="tablist" aria-label="关于何扬">
           {heroChapters.map((item, index) => (
@@ -66,7 +65,7 @@ export function HeroSection() {
             const dy = event.changedTouches[0].clientY - start.y
             if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5) setActive((active + (dx < 0 ? 1 : -1) + heroChapters.length) % heroChapters.length)
           }}>
-          <div key={chapter.id} className={`intro__chapter${chapter.id === 'who' ? ' intro__chapter--who' : ''}`}>
+          <div key={chapter.id} className={`intro__chapter intro__chapter--${chapter.id}`}>
             {chapter.id === 'who' ? <>
               <div className="intro__composition">
                 <HeroArtwork />
@@ -79,18 +78,20 @@ export function HeroSection() {
               </div>
               <p className="intro__description intro__description--who">{chapter.description[0]}<br />{chapter.description[1]}</p>
             </> : <>
-              <p className="intro__hello">{chapter.note}</p>
-              <h1 id="hero-heading">{chapter.line}<br /><span>{chapter.emphasis}</span></h1>
-              <p className="intro__description">{chapter.description}</p>
-              <span className="intro__tag"><span />{chapter.tag}</span>
+              <div className={`intro__composition intro__composition--${chapter.id}`}>
+                <HeroArtwork chapter={chapter.id} />
+                <h1 id="hero-heading" className={`intro__statement intro__statement--${chapter.id}`}>
+                  {chapter.lines.map((line, index) => <span key={index} className="intro__statement-line">{line.before}{line.accent && <span className="intro__blue">{line.accent}</span>}{line.after}</span>)}
+                </h1>
+                <HeroArtwork chapter={chapter.id} plane="front" />
+              </div>
+              <p className="intro__description intro__description--state">{chapter.description[0]}<br />{chapter.description[1]}</p>
             </>}
           </div>
         </div>
       </div>
       <div className="intro__foot">
-        {active !== 0 && <p className="intro__identity">{profile.romanName}<span>PRODUCT · CONTENT · GROWTH</span></p>}
         <a className="intro__scroll" href="#work"><span className="intro__scroll-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4v15m-5-5 5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg></span>向下探索作品</a>
-        {active !== 0 && <p key={chapter.keyword} className="intro__keyword">{chapter.keyword}</p>}
       </div>
     </section>
   )
