@@ -1,227 +1,86 @@
 ---
 name: He Yang Portfolio
-description: Sporty UI, playful sculptural accents and an everyday product mindset; V0.2 Phase A.
+description: Accepted black-white-blue desktop Hero with a Sanvi-inspired project showcase.
 colors:
-  bg: "#f8f9f5"
-  surface: "#eff2ec"
-  ink: "#183e38"
-  ink-soft: "#3d5751"
-  muted: "#66736c"
-  border: "#d8e0d6"
-  border-strong: "#96938d"
-  accent: "#236b53"
-  accent-on-dark: "#b9e7be"
-  accent-soft: "#dceccd"
-  status: "#9a4c27"
-  mint: "#b9e7be"
-  orange: "#f5a16d"
-  lilac: "#c9c6ed"
+  bg: "#ffffff"
+  surface: "#f7f7f7"
+  ink: "#161616"
+  ink-soft: "#414141"
+  muted: "#666666"
+  border: "#e4e4e4"
+  accent: "#1646e8"
+  accent-soft: "#edf1ff"
+  project-bg: "#b4b098"
+  project-tag: "#77735c"
+  project-tag-ink: "#ffffff"
 typography:
   display:
     fontFamily: "Archivo Variable, Source Han Sans SC, Noto Sans CJK SC, PingFang SC, sans-serif"
-    fontSize: "clamp(48px, 5.25vw, 76px)"
-    fontWeight: 720
-    lineHeight: 1.32
+    fontSize: "96px"
+    fontWeight: 850
+    lineHeight: 1.16
     letterSpacing: "-0.035em"
   title:
     fontFamily: "Archivo Variable, Source Han Sans SC, Noto Sans CJK SC, PingFang SC, sans-serif"
-    fontSize: "clamp(2rem, 3vw, 3.2rem)"
-    fontWeight: 650
-    lineHeight: 1.1
-    letterSpacing: "-0.035em"
+    fontSize: "32px"
+    fontWeight: 600
+    lineHeight: 1.3
+    letterSpacing: "-0.025em"
   body:
     fontFamily: "Archivo Variable, Source Han Sans SC, Noto Sans CJK SC, PingFang SC, sans-serif"
-    fontSize: "1rem"
-    lineHeight: 1.65
+    fontSize: "18px"
+    lineHeight: 1.5
   label:
     fontFamily: "Archivo Variable, Source Han Sans SC, Noto Sans CJK SC, PingFang SC, sans-serif"
-    fontSize: "0.75rem"
-    fontWeight: 650
-    letterSpacing: "0.04em"
-  tab:
-    fontFamily: "Archivo Variable, Source Han Sans SC, Noto Sans CJK SC, PingFang SC, sans-serif"
-    fontSize: "11px"
-    fontWeight: 650
-    letterSpacing: "0.035em"
+    fontSize: "12px"
+    fontWeight: 500
 rounded:
-  frame: "0px"
-  notice: "12px"
+  folder: "28px"
+  image: "7px"
+  tag: "16px"
   pill: "99px"
-spacing:
-  '1': "0.5rem"
-  '2': "0.75rem"
-  '3': "1rem"
-  '4': "1.5rem"
-  '5': "2rem"
-  '6': "3rem"
-  '7': "4.5rem"
-  '8': "7rem"
-  '9': "10rem"
-components:
-  chapter-tab:
-    backgroundColor: "transparent"
-    textColor: "#5b6c62"
-    typography: "{typography.tab}"
-    rounded: "{rounded.pill}"
-    padding: "0 17px"
-  chapter-tab-selected:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.bg}"
-    typography: "{typography.tab}"
-    rounded: "{rounded.pill}"
-  editorial-link:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.frame}"
-    padding: "0.35rem 0"
-  editorial-link-hover:
-    textColor: "{colors.accent}"
-  navigation:
-    textColor: "{colors.ink}"
-    height: "100px"
-  availability-notice:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.bg}"
-    rounded: "{rounded.notice}"
-    padding: "10px 16px"
-  wip-status:
-    textColor: "{colors.status}"
-    typography: "{typography.label}"
-  project-frame:
-    backgroundColor: "{colors.surface}"
-    rounded: "{rounded.frame}"
 ---
 
-# Design System: He Yang Portfolio — V0.2 Phase A
+# He Yang Portfolio — current visual contract
 
-## Overview
+Updated 2026-10-17. Scope: the accepted Stage A desktop introduction and Stage B.1 Work refinement. Mode: Experience. This is one portfolio, independent of TrainTrace and its design rules.
 
-**Creative North Star: "Everyday Momentum / 日常的行动感"**
+## Authority and scope
 
-Sporty UI × Playful 3D × Lifestyle App gives this recruitment portfolio a curious, hands-on personality. A fresh off-white ground and deep teal type keep the page readable; forest-green controls and three soft sculptural accents add a sense of movement without competing with the person or the work.
+The accepted Stage A implementation at `d79f145` is the visual baseline: `HeroSection.tsx`, `HeroArtwork.tsx`, `hero.ts`, `Navbar.tsx` and the A1/A2/A3 desktop rules in `hero.css`. Those files are preserved during Stage B.1. Current user instructions take priority, followed by the accepted implementation and this document. `PRODUCT.md` owns product truth; the existing homepage surface and compatibility entries point here.
 
-Compact pill controls and a spacious centered introduction form the current expressive layer. The existing project evidence keeps its flat, ruled composition. Depth belongs to the decorative sculptures and small control feedback, while factual material stays easy to inspect. This records the implemented V0.2 Phase A direction for user review; it does not authorize Phase B expansion.
+Earlier forest-green, sage, mint/apricot/lilac and Sporty UI descriptions are not the current desktop palette. The root tokens and small-screen fallback still contain those historical values; their presence is compatibility, not permission to recolor the accepted desktop Hero. The existing footer is also retained. Playful 3D may remain a future art direction, but cannot override the black-white-blue baseline or authorize new features. No TrainTrace component, palette or layout is a portfolio specification.
 
-This document supersedes the historical Swiss/red identity in the previous DESIGN.md and compatibility documents. The active surface contract in `.impeccable/surfaces/src-app-tsx.md` owns homepage composition and phase scope. Runtime sources are `src/styles/tokens.css`, `hero.css`, `globals.css` and the current components; dormant legacy section styles are not new design guidance.
+## Accepted Stage A introduction
 
-**Key Characteristics:**
-- Fresh off-white and deep teal provide the reading foundation; forest green handles interaction.
-- Mint, apricot and lilac are decorative sculpture accents, not extra text or status colors.
-- Self-hosted Archivo and the existing CJK fallback order remain the only type family system.
-- Compact pill controls coexist with flat, square project evidence frames.
-- Short chapter transitions and mild scroll movement stop for reduced-motion preferences.
+White page, near-black type and #1646e8 accents. Preserve the fixed 100px desktop navigation, five tabs, Chinese statements and each chapter's current artwork. The Who I Am composition uses the blue folded-paper image beside large black/blue text. Other chapters retain their existing SVG/media compositions, transitions and copy. The precise per-chapter sizes and offsets live in `hero.css` and `hero.ts`; do not replace them with an older generic centered-heading or three-sculpture layout.
 
-## Colors
+Preserve the existing font family, chapter keyboard navigation, arrow/Home/End behavior, scroll movement and reduced-motion support. The font values in frontmatter describe key roles, not replacements for per-chapter accepted overrides. No new font package or 3D runtime is required.
 
-The frontmatter records the shared CSS palette without renaming runtime tokens. Green is the interactive voice; pastel colors give the decorative objects their distinct material character.
+## Work composition
 
-### Primary
+Reference: https://sanvithi.com/ . Playwright inspected the first real Work card and its mouse enter/leave states. Reuse observable composition and rhythm with our own real content; do not import the reference's project assets or claim its results.
 
-- **Forest Green (`accent`)** carries highlighted statement text, active navigation marks, hover and focus.
-- **Mint on Dark (`accent-on-dark`)** is the existing light-on-dark alias; it shares the mint value rather than defining another hue.
-- **Soft Green Feedback (`accent-soft`)** supports the scroll control hover.
+At 1440×900 the Work width is 880px; at 1920 it is 960px. The stable 420px interaction stage contains a 500px rounded folder extending 40px above and below. Keep the image centered at 50% width in the default state. Our genuine Love Journal screenshot stays 16:9; no simulated UI or artificial perspective is added. The folder's 28px standard radius approximates the reference superellipse.
 
-### Secondary
+Hover/focus enlarges the image 1.8 times to 90% of the folder width and raises its center 100px. The caption does not move. Four current tags cluster behind the image by default and spread beyond the left/right edges on interaction. Additional tags are assigned balanced columns and distinct row numbers. Optional tag objects in `projects.ts` can set label, side, row and rotations; rows beyond four per side reserve additional stage space. Do not repeat four fixed positions or introduce an automatic packing engine.
 
-- **Mint Sculpture (`mint`)**, **Apricot Sculpture (`orange`)** and **Lilac Sculpture (`lilac`)** describe the three artwork families. Their CSS materials contain local highlight/shadow shades, not a broader semantic palette.
+Use a heavily damped, converging motion, not a large bounce or a common ease-in-out on every element. Tag translation uses a sampled exponential response; image, rotation and fog use separate ~980–1100ms transitions. Interrupted interactions reverse from their current state. No extra scroll entrance or large mouse parallax is added.
 
-### Tertiary
+## Progressive fog and layers
 
-- **Warm WIP Brown (`status`)** keeps In Progress readable and distinct from decorative apricot.
+Layer order: theme canvas → tags → real screenshot → progressive lower fog → blue preview capsule → caption. The canvas itself fades at its bottom into the white page.
 
-### Neutral
+The fog contains three transparent backdrop-filter layers (2px, 6px, 14px), each revealed by a different vertical gradient mask, plus a white gradient. The upper image remains clear, then blur strengthens before the lower part fades to white. There is no fog border, rounded front panel or hard rectangular seam. On hover the fog field translates down 230px and fades away; on leave it smoothly returns. The field is clipped within the fixed stage, so surrounding content does not reflow. Only transform/opacity animate the fog; no per-frame height animation or Canvas/WebGL system is needed.
 
-- **Fresh Off-white (`bg`)** covers the page and the scrolled navigation surface.
-- **Soft Sage Surface (`surface`)** contains project previews.
-- **Deep Teal Ink (`ink`)** carries headings, body text and selected tabs; **Soft Teal Ink (`ink-soft`)** supports descriptions.
-- **Sage Gray (`muted`)** carries secondary metadata and unavailable navigation labels.
-- **Sage Hairline (`border`)** divides evidence; **Strong Hairline (`border-strong`)** is the retained stronger workflow divider.
+The blue 12px capsule appears near the pointer with short opacity/scale feedback. Keyboard focus uses a centered fallback position. Without a confirmed real demo URL it is a non-interactive preview label; a configured demoUrl renders a real link. Do not invent a detail route.
 
-**The Reading First Rule.** Use deep teal and forest green for readable content and controls. Reserve mint, apricot and lilac for decorative artwork.
+## Type, spacing and controls
 
-## Typography
+Work outcome statement: 32px / 1.3, weight 600. Metadata: 18px / 1.5 with a 14px gap. Tags: 17px, 48px high; capsule: 12px, minimum 28px high. Keep Chinese copy's natural wrapping; do not add text or claims just to match the reference's English line count. Work heading spacing must leave room above the enlarged screenshot. Project colors are data-owned; Love Journal uses warm olive #b4b098 and dark olive #77735c with white tag text, coordinated with its existing screenshot.
 
-**Display and Body Font:** Self-hosted Archivo Variable, followed by Source Han Sans SC, Noto Sans CJK SC, PingFang SC and sans-serif. No added font or font package.
+The 80px document scroll padding plus Work's 20px desktop scroll margin accounts for the 100px fixed navigation. Initial fragment navigation runs after React mounts using requestAnimationFrame; hash changes and browser history remain supported. No arbitrary timeout is used for navigation. Preserve visible keyboard focus and disable transitions for reduced motion.
 
-**Character:** The same grotesk family serves confident Chinese headlines, compact English labels and precise project details. The italic lowercase personal mark adds energy without introducing a second display family.
+## Delivery boundaries
 
-### Hierarchy
-
-- **Display:** The frontmatter display role is the current desktop Hero heading. At mobile widths it becomes `clamp(31px, 8.6vw, 46px)` with line-height (1.48).
-- **Title:** Project names use the title role; on mobile they settle at (2rem).
-- **Body:** Base reading uses the body role. Hero supporting copy uses (15px / 1.9), a maximum width (420px), and on mobile (13px / 1.9) within (275px).
-- **Label:** Project metadata uses the label role. Navigation is (14px, weight 550), reducing to (12px) on mobile.
-- **Tab:** Desktop labels use the tab role; tablet and mobile use (10px), with (9px) below the smallest breakpoint.
-- **Personal mark:** The lowercase italic mark is (43px, weight 850); mobile uses (36px). Preserve the compact name lockup on desktop and mark-only treatment on mobile.
-
-Legacy `--text-display` and `--text-xl` remain in the CSS scale for retained components; they are not the active Hero headline specification.
-
-## Layout
-
-The shared content container is capped at (92rem), with fluid page padding `clamp(1.25rem, 3.5vw, 4rem)`. At mobile widths, page padding becomes (1.15rem). Use the existing spacing scale rather than imposing a new grid on retained evidence.
-
-The current Hero is spacious and centered; its exact chapter order and first-viewport arrangement belong to the active surface contract. It uses `100svh`, bounded by a desktop minimum (820px) and maximum (1120px). At the tablet breakpoint the minimum becomes (780px). Mobile keeps `100svh`, bounded by (780px–1000px), and places the tab controls in wrapping rows within (342px). These bounds intentionally allow the Hero to exceed short viewports.
-
-Navigation is fixed, centered within the same container, and measures (100px) high on desktop or (82px) on mobile. It acquires a solid page-color background and one-pixel divider after scroll (24px). Scroll targets and keyboard focus remain visible.
-
-The retained Work row uses a (1.6fr / 1fr) split and stacks at (900px). The workflow frame is (16:10) with minimum height (420px), reducing to (370px) on mobile. Phase A preserves this layout and the existing footer. The Hero's (1000px), mobile (640px) and small-device (360px) breakpoints do not redefine the Work breakpoint.
-
-## Elevation & Depth
-
-Depth is local and purposeful: the CSS mint loop, apricot spark and lilac capsule simulate soft sculptural materials with gradients, inset shading and light cast shadows. Those material shades are implementation details in `hero.css`, not independent shared color tokens. The rest of the page uses tonal surfaces and fine borders; the shared lift token remains `none`.
-
-### Shadow Vocabulary
-
-- **Selected tab:** `0 3px 8px #183e3818` gives the active pill a small tactile lift.
-- **Availability notice:** `0 6px 20px #183e3812` separates the temporary status message from the page.
-- **Scrolled navigation:** `0 1px 0 var(--color-border)` acts as a divider, not an elevated card.
-- **Sculpture shading:** Preserve each shape's local gradient, inset shadow and transform together; the exact material recipes remain in `hero.css`.
-
-**The Evidence Stays Flat Rule.** Sculptures may use gradients, inset shading and soft shadows; project evidence keeps its existing flat frame and ruled information layout.
-
-## Shapes
-
-Pill geometry (99px) belongs to chapter tabs, the scroll cue and sculptural capsules. Temporary notices have soft corners (12px). Work frames remain square (0px) with one-pixel borders. The circular mint loop and eight-ray apricot spark are decorative silhouettes; do not use them as containers for factual content. The legacy `--radius-sm/md/lg` values still exist in CSS, but are not a universal ban on the implemented pills.
-
-## Components
-
-### Chapter tabs
-
-Compact and tactile. Desktop tabs sit inside a pale sage pill rail (5px padding, 4px gap); individual buttons have a minimum target height (44px) and horizontal padding (17px). The selected tab uses deep teal with off-white text; hover uses a lighter sage field. Mobile removes the shared rail and gives each pill its own pale surface. Maintain `tablist` / `tab` / `tabpanel`, roving tab index, arrow and Home/End navigation, and native horizontal-swipe chapter switching.
-
-A chapter changes its statement, description, tag and keyword together. The blur-and-rise transition settles in (500ms) with `cubic-bezier(.16, 1, .3, 1)`. There is no automatic slideshow. Scroll gently moves the text and artwork at different depths; reduced motion removes the transform and chapter animation.
-
-### Navigation and availability notices
-
-The compact personal mark anchors one side; Work, Play, Résumé and Story align on the other. Work is an anchor. Play, Story and the unconfigured Résumé use muted `aria-disabled` buttons that report truthful availability in a `role="status"` notice for (4000ms). They do not open fabricated content. The website has not configured a résumé PDF; selecting or mounting a real résumé belongs to later authorized work.
-
-### Scroll action and text links
-
-The scroll invitation uses a rounded outlined icon target (30px × 38px) inside an overall target of at least (100px × 66px); hover lowers the icon (4px) and adds soft green feedback. Retained text actions use a minimum target height (44px), an underline rule, and (180ms) color/border feedback; an arrow can shift (4px). Keep the global focus outline (2px) and offset (4px).
-
-### Project evidence frame and status
-
-Flat sage previews use square corners and a fine border. The current workflow keeps its numbered six-row structure; adjacent facts retain their existing ruled layout. Warm brown marks In Progress. A case-study link renders only when a real destination exists. Image, gallery and comparison variants remain evidence slots, not permission to synthesize results.
-
-### Replaceable artwork slots
-
-Three independent decorative objects are configured in `src/data/hero.ts` and rendered by `HeroArtwork.tsx`. Each accepts `src` and `media` (`image` / `video`) with desktop/mobile x, y and size; rotation, opacity, layer and parallax depth stay independently controllable. With no `src`, the current CSS shape renders. Supplied public assets use native image/video elements with `object-fit: contain`; there is no GLB viewer or new player runtime. Video is muted, inline and looping, pauses offscreen and for reduced motion, and is decorative rather than informational.
-
-**The Media Slot Rule.** Replace artwork through the existing per-object image/video slots; preserve independent composition controls and do not turn decorative assets into project evidence.
-
-No input or form component is currently rendered; do not invent a canonical form style during this documentation pass.
-
-## Do's and Don'ts
-
-### Do:
-- **Do** preserve the declared Archivo and CJK fallback order.
-- **Do** keep artwork behind the copy, with independent desktop and mobile composition controls.
-- **Do** retain keyboard focus, 44px control targets and reduced-motion behavior.
-- **Do** preserve the current Work layout and truthful WIP labels during Phase A.
-- **Do** describe unavailable destinations with their actual current state; the website has not configured a résumé PDF.
-
-### Don't:
-- **Don't** reintroduce signal-red branding, the old numbered Hero square or the superseded Swiss-only visual restrictions.
-- **Don't** spread sculptural gradients and shadows across factual project frames.
-- **Don't** fabricate project screenshots, results, employers, metrics or resource destinations.
-- **Don't** add Work / Play categorization, Story pages, a résumé modal or new animation/model libraries before Phase B is authorized.
+Homepage only; exactly one visible project. Existing React/Vite architecture and `src/data/projects.ts` remain the content source. No new dependency, CMS, details page, second project or Stage C work. Small-screen fallback remains usable, but this stage does not redesign it. Browser checks and visual comparison establish the tested desktop result; they do not imply real-device frame-rate or public deployment validation.
