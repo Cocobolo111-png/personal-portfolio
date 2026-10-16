@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { HeroArtwork } from '../components/HeroArtwork'
 import { heroChapters } from '../data/hero'
 
 export function HeroSection() {
   const [active, setActive] = useState(0)
   const hero = useRef<HTMLElement>(null)
+  const chapterRoot = useRef<HTMLDivElement>(null)
+  const previousChapter = useRef(active)
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
   const touchStart = useRef<{ x: number; y: number } | null>(null)
   const chapter = heroChapters[active]
@@ -14,21 +16,87 @@ export function HeroSection() {
     if (!section) return
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
     let frame = 0
+    let height = section.offsetHeight
+    let previousProgress = -1
     const render = () => {
       frame = 0
-      const progress = preference.matches ? 0 : Math.min(1, Math.max(0, window.scrollY / section.offsetHeight))
-      section.style.setProperty('--hero-scroll', String(progress))
+      const progress = preference.matches ? 0 : Math.min(1, Math.max(0, window.scrollY / height))
+      if (progress !== previousProgress) {
+        section.style.setProperty('--hero-scroll', String(progress))
+        previousProgress = progress
+      }
     }
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(render) }
+    const onResize = () => { height = section.offsetHeight; onScroll() }
     render()
     window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize)
     preference.addEventListener('change', render)
     return () => {
       cancelAnimationFrame(frame)
       window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
       preference.removeEventListener('change', render)
     }
   }, [])
+
+  useLayoutEffect(() => {
+    if (previousChapter.current === active) return
+    previousChapter.current = active
+    const root = chapterRoot.current
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (!root || preference.matches || !window.matchMedia('(min-width: 1001px)').matches || !root.animate) return
+
+    // Animate only the current DOM. Replacing a chapter cancels its whole
+    // sequence before the next one paints, including its foreground copy.
+    const animations: Animation[] = []
+    const paths = chapter.id === 'care'
+      ? Array.from(root.querySelectorAll<SVGPathElement>('.hero-art__graphic > path'), path => ({ path, length: path.getTotalLength() }))
+      : []
+    const start = document.timeline.currentTime
+    const enter = (element: Element, frames: Keyframe[], duration = 360) => {
+      const animation = element.animate(frames, { duration, easing: 'cubic-bezier(.16, 1, .3, 1)' })
+      if (typeof start === 'number') animation.startTime = start
+      animations.push(animation)
+      return animation
+    }
+    root.style.willChange = 'transform, opacity'
+    const content = enter(root, [{ opacity: .65, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }])
+    content.onfinish = () => { root.style.willChange = '' }
+
+    if (chapter.id === 'who') {
+      root.querySelectorAll('.hero-art img, .hero-art video').forEach(media => {
+        enter(media, [{ transform: 'rotate(-.8deg)' }, { transform: 'rotate(0deg)' }])
+      })
+    } else if (chapter.id === 'care') {
+      paths.forEach(({ path, length }) => {
+        enter(path, [{ strokeDasharray: `${length} ${length}`, strokeDashoffset: length }, { strokeDasharray: `${length} ${length}`, strokeDashoffset: 0 }])
+      })
+    } else if (chapter.id === 'believe') {
+      root.querySelectorAll<HTMLElement>('.hero-art__motion').forEach(graphic => {
+        graphic.style.transformOrigin = '24% 50%'
+        enter(graphic, [{ transform: 'rotate(-1deg)' }, { transform: 'rotate(0deg)' }])
+      })
+    } else if (chapter.id === 'build') {
+      root.querySelectorAll('.hero-art__motion').forEach(group => {
+        enter(group, [{ transform: 'translateX(-5px)' }, { transform: 'translateX(0)' }])
+      })
+    } else {
+      root.querySelectorAll('.hero-art__graphic > g').forEach(stamp => {
+        enter(stamp, [{ opacity: .7 }, { opacity: 1 }])
+      })
+      root.querySelectorAll('.hero-art__graphic > path[stroke-dasharray]').forEach(outline => {
+        enter(outline, [{ strokeDashoffset: 18 }, { strokeDashoffset: 0 }])
+      })
+    }
+    const cancel = () => {
+      animations.forEach(animation => animation.cancel())
+      root.style.willChange = ''
+    }
+    const onPreference = () => { if (preference.matches) cancel() }
+    preference.addEventListener('change', onPreference)
+    return () => { cancel(); preference.removeEventListener('change', onPreference) }
+  }, [active, chapter.id])
 
   function onTabKey(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     let next: number
@@ -65,7 +133,7 @@ export function HeroSection() {
             const dy = event.changedTouches[0].clientY - start.y
             if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5) setActive((active + (dx < 0 ? 1 : -1) + heroChapters.length) % heroChapters.length)
           }}>
-          <div key={chapter.id} className={`intro__chapter intro__chapter--${chapter.id}`}>
+          <div key={chapter.id} ref={chapterRoot} className={`intro__chapter intro__chapter--${chapter.id}`}>
             {chapter.id === 'who' ? <>
               <div className="intro__composition">
                 <HeroArtwork />

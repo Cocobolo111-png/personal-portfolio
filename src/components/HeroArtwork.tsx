@@ -31,7 +31,7 @@ export function HeroArtwork({ plane = 'back', chapter = 'who' }: { plane?: 'back
           {art.src ? art.media === 'video'
             ? <video src={art.src} muted playsInline loop preload="metadata" onError={(event) => { event.currentTarget.style.visibility = 'hidden' }} />
             : <img src={art.src} alt="" decoding="async" fetchPriority="high" onError={(event) => { event.currentTarget.style.visibility = 'hidden' }} />
-            : <svg className={`hero-art__graphic hero-art__graphic--${art.graphic}`} viewBox="0 0 1120 430" fill="none" focusable="false">
+            : <div className="hero-art__motion"><svg className={`hero-art__graphic hero-art__graphic--${art.graphic}`} viewBox="0 0 1120 430" fill="none" focusable="false">
               {art.graphic === 'path' && <>
                 <path d="M112 322V140c0-62 40-104 102-104s102 42 102 104v54" stroke="currentColor" strokeWidth="28" strokeLinecap="round" />
                 <path d="M114 326h108c51 0 83-24 83-69v-14c0-25 19-45 45-45h120" stroke="currentColor" strokeWidth="14" strokeLinecap="round" />
@@ -63,7 +63,7 @@ export function HeroArtwork({ plane = 'back', chapter = 'who' }: { plane?: 'back
                 <g transform="rotate(-9 219 205)"><path d="M101 163h240v93H101Z" fill="currentColor" /><text x="129" y="230" className="hero-art__wip">WIP</text></g>
                 <text x="166" y="399" className="hero-art__caption">WORK IN PROGRESS</text>
               </>}
-            </svg>}
+            </svg></div>}
         </div>
       ))}
     </div>
