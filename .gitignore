@@ -1,0 +1,47 @@
+# Dependencies and generated build output
+node_modules/
+dist/
+.pnpm-store/
+*.tsbuildinfo
+/vite.config.js
+/vite.config.d.ts
+
+# Credentials, local settings and environment files
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+.aws/
+.ssh/
+.codex/
+.agents/
+.vscode/
+.idea/
+
+# Local reviews, captures and temporary material
+.impeccable/
+.DS_Store
+*.log
+*.tmp
+*.bak
+*~
+tmp/
+temp/
+coverage/
+playwright-report/
+test-results/
+
+# Source media packages and archives do not ship with this site
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.psd
+*.ai
+*.blend
+*.glb
+*.gltf
+*.mov
