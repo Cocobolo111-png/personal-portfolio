@@ -4,9 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 0.0.0.0",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "dev": "vite --config vite.config.ts --host 0.0.0.0",
+    "build": "tsc -b && vite build --config vite.config.ts && node scripts/build-pages.mjs",
+    "preview": "vite preview --config vite.config.ts --host 0.0.0.0"
   },
   "dependencies": {
     "@fontsource-variable/archivo": "^5.3.0",

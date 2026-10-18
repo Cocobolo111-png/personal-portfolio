@@ -1,0 +1,52 @@
+{
+  "verifiedAt": "2026-10-17T16:43:14.655Z",
+  "inputKind": "explicitly-synthetic-public-demo",
+  "path": "original TrainTrace App → same-origin Node proxy → DeepSeek official API",
+  "facts": {
+    "exercise": "杠铃卧推",
+    "weightKg": 60,
+    "previousReps": [
+      8,
+      8,
+      8
+    ],
+    "currentReps": [
+      8,
+      10,
+      8
+    ],
+    "previousTotal": 24,
+    "currentTotal": 26
+  },
+  "status": 200,
+  "requestCount": 1,
+  "result": {
+    "summary": "杠铃卧推在60公斤下完成3组共26次，比上次同重量多完成2次，其中一组做到10次，说明这个重量下的完成量有所增加。",
+    "progress": "",
+    "insight": "同重量能多做几次，是训练容量上的变化，值得记录；但单次完成量增加不等于最大力量或肌肉已经增长，还需要更多次稳定表现来观察。",
+    "nextAction": "暂不加重，先稳定重复本次表现。",
+    "meta": {
+      "provider": "deepseek",
+      "requestedModel": "deepseek-flash",
+      "model": "deepseek-flash",
+      "status": 200,
+      "elapsedMs": 1495,
+      "generatedAt": "2026-10-17T16:42:56.484Z",
+      "usage": {
+        "prompt_tokens": 3371,
+        "completion_tokens": 101,
+        "total_tokens": 3472,
+        "prompt_cache_hit_tokens": 1024,
+        "prompt_cache_miss_tokens": 2347
+      }
+    }
+  },
+  "errors": [],
+  "rawModelExplanationFields": [
+    "summary",
+    "progress",
+    "insight"
+  ],
+  "nextActionSource": "existing server rule engine; model nextAction is constrained by design",
+  "video": "traintrace-ai-walkthrough.mp4"
+}

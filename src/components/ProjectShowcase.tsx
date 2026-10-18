@@ -26,7 +26,8 @@ export function ProjectShowcase({ project }: { project: Project }) {
       '--tag-space': `${Math.max(0, Math.max(rows.left, rows.right) - 4) * 94}px`,
       '--tag-right-gap': `${rows.right > 2 ? 94 : 68}px`,
     } as CSSProperties
-    const positionPreview = (event: PointerEvent<HTMLDivElement>) => {
+    const Stage = project.caseStudyUrl ? 'a' : 'div'
+    const positionPreview = (event: PointerEvent<HTMLElement>) => {
       if (event.pointerType !== 'mouse') return
       const bounds = event.currentTarget.getBoundingClientRect()
       event.currentTarget.style.setProperty('--cta-x', `${event.clientX - bounds.left + 48}px`)
@@ -34,8 +35,8 @@ export function ProjectShowcase({ project }: { project: Project }) {
     }
 
     return (
-      <article className="work-showcase" style={theme} aria-labelledby={`${project.slug}-title`}>
-        <div className="work-showcase__stage" tabIndex={0} aria-label={`${project.title}，聚焦以展开界面预览`}
+      <article className={`work-showcase${showcase.portrait ? ' work-showcase--portrait' : ''}`} style={theme} aria-labelledby={`${project.slug}-title`}>
+        <Stage className="work-showcase__stage" href={project.caseStudyUrl} tabIndex={0} aria-label={project.caseStudyUrl ? `${project.title}，查看项目案例` : `${project.title}，聚焦以展开界面预览`}
           onPointerMove={positionPreview}
           onFocus={(event) => {
             if (!event.target.matches(':focus-visible')) return
@@ -57,12 +58,12 @@ export function ProjectShowcase({ project }: { project: Project }) {
               <span className="work-showcase__blur work-showcase__blur--far" />
             </div>
           </div>
-          {showcase.demoUrl ? (
+          {showcase.demoUrl && !project.caseStudyUrl ? (
             <a className="work-showcase__cta" href={showcase.demoUrl} target="_blank" rel="noreferrer">{showcase.ctaLabel}<ArrowIcon /></a>
           ) : (
             <span className="work-showcase__cta work-showcase__cta--preview" aria-hidden="true">{showcase.ctaLabel}</span>
           )}
-        </div>
+        </Stage>
         <div className="work-showcase__caption">
           <h3 id={`${project.slug}-title`}>{showcase.statement}</h3>
           <p><span>{project.title}</span><span aria-hidden="true"> · </span>{project.category}</p>

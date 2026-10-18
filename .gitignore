@@ -22,6 +22,8 @@ dist/
 
 # Local reviews, captures and temporary material
 .impeccable/
+.tmp-d1-assets/
+.tmp-d23-evidence/
 .DS_Store
 *.log
 *.tmp

@@ -3,8 +3,14 @@ import { Footer } from './components/Footer'
 import { Navbar } from './components/Navbar'
 import { HeroSection } from './sections/HeroSection'
 import { WorkSection } from './sections/WorkSection'
+import { ProjectCaseStudy } from './sections/ProjectCaseStudy'
+import { projects } from './data/projects'
+import { siteUrl } from './paths'
 
 export default function App() {
+  const pathname = window.location.pathname.replace(/\/+$/, '') || '/'
+  const project = projects.find(item => item.caseStudy && item.caseStudyUrl === pathname)
+  const isHome = pathname === siteUrl().replace(/\/$/, '') || pathname === '/'
   useLayoutEffect(() => {
     const previousRestoration = history.scrollRestoration
     history.scrollRestoration = 'manual'
@@ -46,10 +52,11 @@ export default function App() {
   return (
     <>
       <a className="skip-link" href="#main-content">跳到主要内容</a>
-      <Navbar />
-      <main id="main-content">
-        <HeroSection />
-        <WorkSection />
+      <Navbar homeHref={isHome ? '' : siteUrl()} />
+      <main id="main-content" className={isHome ? undefined : 'case-main'}>
+        {isHome ? <><HeroSection /><WorkSection /></> : project ? <ProjectCaseStudy project={project} /> : (
+          <section className="case-not-found"><h1>这个案例还没上架。</h1><a href={siteUrl('#work')}>返回全部项目</a></section>
+        )}
       </main>
       <Footer />
     </>

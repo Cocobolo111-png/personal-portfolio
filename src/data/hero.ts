@@ -1,3 +1,4 @@
+import { siteUrl } from '../paths'
 // Personal statements based on the existing profile, project and currentFocus data.
 export const heroChapters = [
   { id: 'who', label: 'WHO I AM', note: '你好，我是何扬。', headline: { greeting: '我是', name: '何扬', product: 'AI 产品', growth: '也做内容增长。' }, description: ['在产品、内容与增长之间，把想法做出来，', '再从真实反馈里迭代。'], keyword: 'Curious by nature.', tag: 'AI · PRODUCT · GROWTH' },
@@ -33,7 +34,7 @@ export type HeroArtwork = {
 // One shared asset: its folded corner is also rendered above the title.
 // Replace src and these composition values when the personal artwork arrives.
 export const heroArtwork: HeroArtwork[] = [
-  { id: 'creative-fold', chapter: 'who', src: '/hero/creative-fold.png', media: 'image', aspectRatio: '1196 / 1315', foregroundClip: 'polygon(54% 74%, 85% 66%, 77% 97%, 53% 94%)', x: '20%', y: '50%', size: '40.2%', mobileX: '18%', mobileY: '66%', mobileSize: '130px', rotate: '0deg', opacity: 1, layer: 0, depth: 0 },
+  { id: 'creative-fold', chapter: 'who', src: siteUrl('hero/creative-fold.png'), media: 'image', aspectRatio: '1196 / 1315', foregroundClip: 'polygon(54% 74%, 85% 66%, 77% 97%, 53% 94%)', x: '20%', y: '50%', size: '40.2%', mobileX: '18%', mobileY: '66%', mobileSize: '130px', rotate: '0deg', opacity: 1, layer: 0, depth: 0 },
   { id: 'open-path', chapter: 'care', graphic: 'path', aspectRatio: '1120 / 430', x: '50%', y: '50%', size: '100%', mobileX: '50%', mobileY: '50%', mobileSize: '100%', rotate: '0deg', opacity: 1, layer: 0, depth: 0 },
   { id: 'feedback-cycle', chapter: 'believe', graphic: 'cycle', aspectRatio: '1120 / 430', foregroundClip: 'inset(78% 42% 0 0)', x: '50%', y: '50%', size: '100%', mobileX: '50%', mobileY: '50%', mobileSize: '100%', rotate: '0deg', opacity: 1, layer: 0, depth: 0 },
   { id: 'workflow-modules', chapter: 'build', graphic: 'modules', aspectRatio: '1120 / 430', foregroundClip: 'inset(76% 60% 0 0)', x: '50%', y: '50%', size: '100%', mobileX: '50%', mobileY: '50%', mobileSize: '100%', rotate: '0deg', opacity: 1, layer: 0, depth: 0 },

@@ -6,6 +6,7 @@ import './styles/tokens.css'
 import './styles/globals.css'
 import './styles/hero.css'
 import './styles/work.css'
+import './styles/case-study.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

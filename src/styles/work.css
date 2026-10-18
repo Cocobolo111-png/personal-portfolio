@@ -16,6 +16,7 @@
 .projects-list { gap: 220px; }
 .work-showcase { min-width: 0; }
 .work-showcase__stage {
+  display: block;
   position: relative;
   isolation: isolate;
   height: calc(420px + var(--tag-space, 0px));
@@ -162,4 +163,10 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .work-showcase__stage * { transition: none; transition-duration: 0s !important; }
+}
+
+/* Mobile products keep their original screen proportions inside the existing card. */
+.work-showcase--portrait .work-showcase__mockup { width: 22%; }
+@media (max-width: 1000px) {
+  .work-showcase--portrait .work-showcase__mockup { width: 32%; }
 }
