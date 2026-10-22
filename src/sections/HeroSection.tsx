@@ -50,43 +50,44 @@ export function HeroSection() {
     // Animate only the current DOM. Replacing a chapter cancels its whole
     // sequence before the next one paints, including its foreground copy.
     const animations: Animation[] = []
-    const paths = chapter.id === 'care'
-      ? Array.from(root.querySelectorAll<SVGPathElement>('.hero-art__graphic > path'), path => ({ path, length: path.getTotalLength() }))
-      : []
     const start = document.timeline.currentTime
-    const enter = (element: Element, frames: Keyframe[], duration = 360) => {
-      const animation = element.animate(frames, { duration, easing: 'cubic-bezier(.16, 1, .3, 1)' })
+    const enter = (element: Element, frames: Keyframe[], duration = 360, delay = 0) => {
+      const animation = element.animate(frames, {
+        duration, delay, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'backwards',
+      })
       if (typeof start === 'number') animation.startTime = start
       animations.push(animation)
       return animation
     }
     root.style.willChange = 'transform, opacity'
-    const content = enter(root, [{ opacity: .65, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }])
+    const content = enter(root, [{ opacity: .7, transform: 'translateY(8px)' }, { opacity: 1, transform: 'translateY(0)' }])
     content.onfinish = () => { root.style.willChange = '' }
 
-    if (chapter.id === 'who') {
-      root.querySelectorAll('.hero-art img, .hero-art video').forEach(media => {
-        enter(media, [{ transform: 'rotate(-.8deg)' }, { transform: 'rotate(0deg)' }])
-      })
-    } else if (chapter.id === 'care') {
-      paths.forEach(({ path, length }) => {
-        enter(path, [{ strokeDasharray: `${length} ${length}`, strokeDashoffset: length }, { strokeDasharray: `${length} ${length}`, strokeDashoffset: 0 }])
+    root.querySelectorAll<SVGPathElement>('.hero-art__trace').forEach(path => {
+      const length = path.getTotalLength()
+      enter(path, [
+        { strokeDasharray: `${length} ${length}`, strokeDashoffset: length },
+        { strokeDasharray: `${length} ${length}`, strokeDashoffset: 0 },
+      ], 680)
+    })
+    if (chapter.id === 'care') {
+      root.querySelectorAll('.hero-art__settle').forEach(node => {
+        enter(node, [{ opacity: .4, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }], 500, 100)
       })
     } else if (chapter.id === 'believe') {
-      root.querySelectorAll<HTMLElement>('.hero-art__motion').forEach(graphic => {
-        graphic.style.transformOrigin = '24% 50%'
-        enter(graphic, [{ transform: 'rotate(-1deg)' }, { transform: 'rotate(0deg)' }])
+      root.querySelectorAll('.hero-art__experiment').forEach(ball => {
+        enter(ball, [
+          { transform: 'translate(-152px, 179px)', offset: 0 },
+          { transform: 'translate(-116px, -2px)', offset: .5 },
+          { transform: 'translate(0, 0)', offset: 1 },
+        ], 680)
       })
-    } else if (chapter.id === 'build') {
-      root.querySelectorAll('.hero-art__motion').forEach(group => {
-        enter(group, [{ transform: 'translateX(-5px)' }, { transform: 'translateX(0)' }])
-      })
-    } else {
-      root.querySelectorAll('.hero-art__graphic > g').forEach(stamp => {
-        enter(stamp, [{ opacity: .7 }, { opacity: 1 }])
-      })
-      root.querySelectorAll('.hero-art__graphic > path[stroke-dasharray]').forEach(outline => {
-        enter(outline, [{ strokeDashoffset: 18 }, { strokeDashoffset: 0 }])
+    } else if (chapter.id === 'now') {
+      root.querySelectorAll('.hero-art__module').forEach((module, index) => {
+        enter(module, [
+          { opacity: .5, transform: `translate(${(index - 1) * 10}px, ${12 - index * 3}px)` },
+          { opacity: 1, transform: 'translate(0, 0)' },
+        ], 480, index * 50)
       })
     }
     const cancel = () => {
@@ -134,27 +135,14 @@ export function HeroSection() {
             if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.5) setActive((active + (dx < 0 ? 1 : -1) + heroChapters.length) % heroChapters.length)
           }}>
           <div key={chapter.id} ref={chapterRoot} className={`intro__chapter intro__chapter--${chapter.id}`}>
-            {chapter.id === 'who' ? <>
-              <div className="intro__composition">
-                <HeroArtwork />
-                <h1 id="hero-heading" className="intro__headline">
-                  <span className="intro__headline-line intro__headline-line--name"><span className="intro__greeting">{chapter.headline.greeting}</span><strong>{chapter.headline.name}</strong><span className="intro__comma">，</span></span>
-                  <span className="intro__headline-line intro__headline-line--product">做 <span className="intro__blue">{chapter.headline.product}</span>，</span>
-                  <span className="intro__headline-line intro__headline-line--growth">{chapter.headline.growth}</span>
-                </h1>
-                <HeroArtwork plane="front" />
-              </div>
-              <p className="intro__description intro__description--who">{chapter.description[0]}<br />{chapter.description[1]}</p>
-            </> : <>
-              <div className={`intro__composition intro__composition--${chapter.id}`}>
-                <HeroArtwork chapter={chapter.id} />
-                <h1 id="hero-heading" className={`intro__statement intro__statement--${chapter.id}`}>
-                  {chapter.lines.map((line, index) => <span key={index} className="intro__statement-line">{line.before}{line.accent && <span className="intro__blue">{line.accent}</span>}{line.after}</span>)}
-                </h1>
-                <HeroArtwork chapter={chapter.id} plane="front" />
-              </div>
-              <p className="intro__description intro__description--state">{chapter.description[0]}<br />{chapter.description[1]}</p>
-            </>}
+            <div className={`intro__composition intro__composition--${chapter.id}`}>
+              <h1 id="hero-heading" className={`intro__statement intro__statement--${chapter.id}`}>
+                {chapter.lines.map((line, index) => <span key={index} className="intro__statement-line">{line.before}{line.accent && <span className="intro__blue">{line.accent}</span>}{line.after}</span>)}
+              </h1>
+              {chapter.id === 'who' && <span className="intro__curiosity-mark" aria-hidden="true">?</span>}
+              <HeroArtwork chapter={chapter.id} />
+            </div>
+            <p className="intro__description">{chapter.description}</p>
           </div>
         </div>
       </div>

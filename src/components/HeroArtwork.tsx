@@ -1,71 +1,82 @@
-import { useEffect, useRef, type CSSProperties } from 'react'
-import { heroArtwork, type HeroChapterId } from '../data/hero'
+import type { HeroChapterId } from '../data/hero'
 
-export function HeroArtwork({ plane = 'back', chapter = 'who' }: { plane?: 'back' | 'front'; chapter?: HeroChapterId }) {
-  const root = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const videos = root.current?.querySelectorAll('video')
-    if (!videos?.length) return
-    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    let visible = false
-    const update = () => videos.forEach((video) => {
-      if (visible && !preference.matches) void video.play().catch(() => {})
-      else video.pause()
-    })
-    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update() })
-    observer.observe(root.current!)
-    preference.addEventListener('change', update)
-    return () => { observer.disconnect(); preference.removeEventListener('change', update); videos.forEach((video) => video.pause()) }
-  }, [chapter])
+// Abstract editorial geometry, not product UI or model-generated imagery.
+// Who / Build stand on their typography and render no reserved media container.
+export function HeroArtwork({ chapter }: { chapter: HeroChapterId }) {
+  if (chapter === 'who' || chapter === 'build') return null
+
   return (
-    <div ref={root} className={`hero-art hero-art--${plane}`} aria-hidden="true">
-      {heroArtwork.filter((art) => art.chapter === chapter && (plane === 'back' || art.foregroundClip)).map((art) => (
-        <div key={art.id} className="hero-art__object" style={{
-          '--art-x': art.x, '--art-y': art.y, '--art-size': art.size,
-          '--art-mobile-x': art.mobileX, '--art-mobile-y': art.mobileY,
-          '--art-mobile-size': art.mobileSize, '--art-rotate': art.rotate,
-          '--art-depth': art.depth, aspectRatio: art.aspectRatio,
-          clipPath: plane === 'front' ? art.foregroundClip : undefined,
-          opacity: art.opacity, zIndex: art.layer,
-        } as CSSProperties}>
-          {art.src ? art.media === 'video'
-            ? <video src={art.src} muted playsInline loop preload="metadata" onError={(event) => { event.currentTarget.style.visibility = 'hidden' }} />
-            : <img src={art.src} alt="" decoding="async" fetchPriority="high" onError={(event) => { event.currentTarget.style.visibility = 'hidden' }} />
-            : <div className="hero-art__motion"><svg className={`hero-art__graphic hero-art__graphic--${art.graphic}`} viewBox="0 0 1120 430" fill="none" focusable="false">
-              {art.graphic === 'path' && <>
-                <path d="M112 322V140c0-62 40-104 102-104s102 42 102 104v54" stroke="currentColor" strokeWidth="28" strokeLinecap="round" />
-                <path d="M114 326h108c51 0 83-24 83-69v-14c0-25 19-45 45-45h120" stroke="currentColor" strokeWidth="14" strokeLinecap="round" />
-                <path d="M310 341h588c25 0 42-15 42-39v-10" stroke="currentColor" strokeWidth="12" strokeLinecap="round" />
-                <path d="m919 307 21-21 21 21" stroke="currentColor" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" />
-                <text x="100" y="384" className="hero-art__caption">LESS FRICTION. MORE FLOW.</text>
-              </>}
-              {art.graphic === 'cycle' && <>
-                <path d="M100 205C99 113 172 42 263 42c79 0 136 43 158 103" stroke="currentColor" strokeWidth="34" strokeLinecap="round" />
-                <path d="m371 129 58 32 17-62" stroke="currentColor" strokeWidth="16" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M435 231c0 92-74 151-165 151-80 0-143-41-165-103" stroke="currentColor" strokeWidth="34" strokeLinecap="round" />
-                <path d="m153 300-58-37-20 65" stroke="currentColor" strokeWidth="16" strokeLinecap="round" strokeLinejoin="round" />
-                <text x="159" y="131" className="hero-art__word" transform="rotate(-12 159 131)">MAKE</text>
-                <text x="184" y="222" className="hero-art__word">TEST</text>
-                <text x="205" y="312" className="hero-art__word" transform="rotate(8 205 312)">LEARN</text>
-              </>}
-              {art.graphic === 'modules' && <g transform="rotate(-9 245 220)">
-                <path d="M100 49h174v78h42v97h-42v110H100Z" fill="currentColor" />
-                <path d="M177 153h245v94h-55v55H177Z" fill="white" stroke="currentColor" strokeWidth="5" />
-                <path d="M168 296h198v93H244v-33h-76Z" fill="currentColor" />
-                <text x="121" y="106" className="hero-art__word hero-art__word--white">CONTENT</text>
-                <text x="207" y="214" className="hero-art__word">PUBLISH</text>
-                <text x="196" y="340" className="hero-art__word hero-art__word--white">REVIEW</text>
-              </g>}
-              {art.graphic === 'wip' && <>
-                <path d="M142 344V58h252M142 344h96" stroke="currentColor" strokeWidth="12" strokeLinecap="square" />
-                <path d="M164 82h208v240H164Z" stroke="currentColor" strokeWidth="2" strokeDasharray="8 10" />
-                <path d="M108 58h22m12-34v22m252-22v22m14 12h22M108 344h22m12 13v22" stroke="currentColor" strokeWidth="2" />
-                <g transform="rotate(-9 219 205)"><path d="M101 163h240v93H101Z" fill="currentColor" /><text x="129" y="230" className="hero-art__wip">WIP</text></g>
-                <text x="166" y="399" className="hero-art__caption">WORK IN PROGRESS</text>
-              </>}
-            </svg></div>}
-        </div>
-      ))}
+    <div className={`hero-art hero-art--${chapter}`} aria-hidden="true">
+      <svg className="hero-art__graphic" viewBox="0 0 360 360" fill="none" focusable="false">
+        {chapter === 'care' && <>
+          <path d="M31 211C3 129 79 62 148 104c65 39 51 148-9 153-60 4-91-65-51-107 48-51 146-3 153 61 7 63-45 99-102 70" stroke="#e0e3eb" strokeWidth="18" strokeLinecap="round" />
+          <path d="M39 179c30-43 95-14 68 40-16 31-54 31-59 2-6-37 58-77 102-45 53 38 9 123-30 91-38-31-10-101 48-88 57 13 51 76 19 96" stroke="#a5aab7" strokeWidth="2" strokeLinecap="round" />
+          <path d="M60 72 88 50m-8 42 20-16M248 292l27 14" stroke="#161616" strokeWidth="3" strokeLinecap="round" />
+          <path className="hero-art__trace" d="M27 301c62 1 89-24 113-68 24-45 8-108 60-121 43-11 86 13 113-38" stroke="currentColor" strokeWidth="15" strokeLinecap="round" />
+          <g className="hero-art__settle">
+            <circle cx="313" cy="74" r="23" fill="white" />
+            <circle cx="313" cy="74" r="12" fill="currentColor" />
+            <circle cx="28" cy="301" r="7" fill="#161616" />
+          </g>
+          <g transform="rotate(16 224 174)">
+            <path d="M209 149h31v49h-31z" fill="white" />
+            <path d="M216 155h18v36h-18z" fill="#161616" />
+          </g>
+          <circle cx="284" cy="200" r="5" fill="#161616" />
+        </>}
+        {chapter === 'believe' && <>
+          <path d="M73 278C2 239 11 143 88 90c56-38 149-34 199 6 64 50 44 145-16 181-42 25-93 25-126 8" stroke="#d9dde6" strokeWidth="2" strokeDasharray="5 10" strokeLinecap="round" />
+          <path className="hero-art__trace" d="M74 267C24 164 118 46 265 88" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+          <g transform="rotate(-14 136 237)">
+            <g className="hero-art__prototype">
+              <path d="M66 183h141v108H66z" fill="white" stroke="#161616" strokeWidth="2.5" />
+              <path d="M66 183h141v25H66z" fill="#161616" />
+              <circle cx="79" cy="195" r="2.5" fill="white" />
+              <path d="M88 230h74m-74 15h48" stroke="#c1c7d3" strokeWidth="4" />
+              <path d="M88 270h38" stroke="currentColor" strokeWidth="7" />
+              <path d="m175 250 9 9-9 9m-11-9h19" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            </g>
+          </g>
+          <circle className="hero-art__experiment" cx="265" cy="88" r="24" fill="currentColor" />
+          <circle cx="265" cy="88" r="36" stroke="currentColor" strokeWidth="1.5" />
+          <path d="m284 229 41-18-18 41-6-16-17-7Z" fill="currentColor" />
+          <path d="m302 235 23-24" stroke="white" strokeWidth="1.5" />
+          <path d="m229 298-6 14 16-5" stroke="#161616" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <circle cx="55" cy="121" r="5" fill="#161616" />
+        </>}
+        {chapter === 'now' && <>
+          <path className="hero-art__trace" d="M42 270h35c15 0 22 8 22 22v17h165c17 0 28-10 28-26v-31" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+          <g transform="rotate(-11 141 151)">
+            <g className="hero-art__module">
+              <rect x="42" y="60" width="179" height="192" rx="4" fill="white" stroke="#c7ccd7" strokeWidth="2" />
+              <path d="M62 83h48m-48 18h121" stroke="#c7ccd7" strokeWidth="3" />
+              <path d="M63 128h45v41H63z" fill="#edf1ff" />
+              <path d="M119 128h80v5h-80zm0 17h53v4h-53z" fill="#dce1ec" />
+            </g>
+          </g>
+          <g className="hero-art__module">
+            <rect x="91" y="118" width="216" height="155" rx="4" fill="white" stroke="#161616" strokeWidth="2.5" />
+            <path d="M92 150h214" stroke="#161616" strokeWidth="2" />
+            <circle cx="106" cy="134" r="3" fill="currentColor" />
+            <path d="M118 134h31m-35 39h71" stroke="#161616" strokeWidth="3" />
+            <path d="M114 190h120m-120 13h79" stroke="#c7ccd7" strokeWidth="3" />
+            <path d="M114 227h48v22h-48z" fill="currentColor" />
+            <path d="M175 238h46m12 0h13" stroke="#c7ccd7" strokeWidth="3" />
+          </g>
+          <g transform="rotate(9 278 80)">
+            <g className="hero-art__module">
+              <path d="M231 56h96v49h-96z" fill="currentColor" />
+              <text x="246" y="90" className="hero-art__wip">WIP</text>
+            </g>
+          </g>
+          <g className="hero-art__module">
+            <path d="M255 240h68v47h-68z" fill="currentColor" />
+            <path d="m277 263 9 8 15-17" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+          <circle cx="43" cy="270" r="6" fill="#161616" />
+          <path d="M276 319h18m-9-9v18" stroke="#161616" strokeWidth="2" />
+        </>}
+      </svg>
     </div>
   )
 }

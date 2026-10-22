@@ -1,42 +1,45 @@
-import { siteUrl } from '../paths'
-// Personal statements based on the existing profile, project and currentFocus data.
+// Five personal chapters. Copy is the approved V0.3 editorial baseline.
 export const heroChapters = [
-  { id: 'who', label: 'WHO I AM', note: '你好，我是何扬。', headline: { greeting: '我是', name: '何扬', product: 'AI 产品', growth: '也做内容增长。' }, description: ['在产品、内容与增长之间，把想法做出来，', '再从真实反馈里迭代。'], keyword: 'Curious by nature.', tag: 'AI · PRODUCT · GROWTH' },
-  { id: 'care', label: 'WHAT I CARE ABOUT', lines: [{ before: '让 AI 少一点门槛，', accent: '', after: '' }, { before: '让体验多一点', accent: '顺手', after: '。' }], description: ['从具体问题出发，降低理解与使用 AI 的门槛，', '让每一步都更容易开始，也更容易继续。'], keyword: 'LESS FRICTION. MORE FLOW.' },
-  { id: 'believe', label: 'WHAT I BELIEVE IN', lines: [{ before: '先把想法做出来，', accent: '', after: '' }, { before: '再让', accent: '真实反馈', after: '说话。' }], description: ['先实践，再验证。记录发生了什么，', '让每一次尝试，成为下一次改进的起点。'], keyword: 'MAKE. TEST. LEARN.' },
-  { id: 'build', label: 'WHAT I BUILD', lines: [{ before: '把内容工作流，', accent: '', after: '' }, { before: '做成', accent: '可复用', after: '的系统。' }], description: ['连接内容生产、发布与反馈，', '把一次次重复的动作，组织成可以复用的工作流。'], keyword: 'LESS REPETITION. MORE SYSTEM.' },
-  { id: 'now', label: "WHAT I'M UP TO", lines: [{ before: '正在构建，', accent: '', after: '' }, { before: 'AI Content', accent: '', after: '' }, { before: '', accent: 'Growth OS.', after: '' }], description: ['正在搭建 AI Content Growth OS，', '连接内容工作流，在实践中持续完善。'], keyword: 'WORK IN PROGRESS' },
+  {
+    id: 'who', label: 'WHO I AM',
+    lines: [
+      { before: '总想试试，', accent: '', after: '' },
+      { before: '事情', accent: '还能', after: '怎么做。' },
+    ],
+    description: '我关注 AI 产品、内容与增长，喜欢把零散的想法做成真实可用的作品，再看它们如何在反馈里继续生长。',
+  },
+  {
+    id: 'care', label: 'WHAT I CARE ABOUT',
+    lines: [
+      { before: '我更在意，', accent: '', after: '' },
+      { before: '人在哪一步', accent: '卡住', after: '。' },
+    ],
+    description: '比起技术本身，我更关心使用者会不会犹豫、会不会绕路、会不会在第一步就失去继续下去的兴趣。',
+  },
+  {
+    id: 'believe', label: 'WHAT I BELIEVE IN',
+    lines: [
+      { before: '先把想法做出来，', accent: '', after: '' },
+      { before: '再让', accent: '真实反馈', after: '说话。' },
+    ],
+    description: '我相信判断不该停留在脑子里。先做出可用的版本，再看真实使用发生了什么；有效的留下，不够好的继续调整。',
+  },
+  {
+    id: 'build', label: 'WHAT I BUILD',
+    lines: [
+      { before: '把身边的问题，', accent: '', after: '' },
+      { before: '慢慢做成', accent: '可用', after: '的东西。' },
+    ],
+    description: '从训练记录、内容创作到关系表达，我习惯从真实场景出发，把一个念头发展成可以被使用、被验证、被继续迭代的作品。',
+  },
+  {
+    id: 'now', label: "WHAT I'M UP TO",
+    lines: [
+      { before: '最近在打磨', accent: '', after: '' },
+      { before: '一套', accent: '内容增长', after: '系统。' },
+    ],
+    description: '它叫 AI Content Growth OS。我在把选题、创作、发布和复盘串起来，也在用自己的内容实践，持续验证这套工作流到底有没有用。',
+  },
 ] as const
 
 export type HeroChapterId = typeof heroChapters[number]['id']
-
-export type HeroArtwork = {
-  id: string
-  chapter: HeroChapterId
-  graphic?: 'path' | 'cycle' | 'modules' | 'wip'
-  // Transparent image or video in public/; no model runtime required.
-  src?: string
-  media?: 'image' | 'video'
-  aspectRatio: string
-  foregroundClip?: string
-  x: string
-  y: string
-  size: string
-  mobileX: string
-  mobileY: string
-  mobileSize: string
-  rotate: string
-  opacity: number
-  layer: number
-  depth: number
-}
-
-// One shared asset: its folded corner is also rendered above the title.
-// Replace src and these composition values when the personal artwork arrives.
-export const heroArtwork: HeroArtwork[] = [
-  { id: 'creative-fold', chapter: 'who', src: siteUrl('hero/creative-fold.png'), media: 'image', aspectRatio: '1196 / 1315', foregroundClip: 'polygon(54% 74%, 85% 66%, 77% 97%, 53% 94%)', x: '20%', y: '50%', size: '40.2%', mobileX: '18%', mobileY: '66%', mobileSize: '130px', rotate: '0deg', opacity: 1, layer: 0, depth: 0 },
-  { id: 'open-path', chapter: 'care', graphic: 'path', aspectRatio: '1120 / 430', x: '50%', y: '50%', size: '100%', mobileX: '50%', mobileY: '50%', mobileSize: '100%', rotate: '0deg', opacity: 1, layer: 0, depth: 0 },
-  { id: 'feedback-cycle', chapter: 'believe', graphic: 'cycle', aspectRatio: '1120 / 430', foregroundClip: 'inset(78% 42% 0 0)', x: '50%', y: '50%', size: '100%', mobileX: '50%', mobileY: '50%', mobileSize: '100%', rotate: '0deg', opacity: 1, layer: 0, depth: 0 },
-  { id: 'workflow-modules', chapter: 'build', graphic: 'modules', aspectRatio: '1120 / 430', foregroundClip: 'inset(76% 60% 0 0)', x: '50%', y: '50%', size: '100%', mobileX: '50%', mobileY: '50%', mobileSize: '100%', rotate: '0deg', opacity: 1, layer: 0, depth: 0 },
-  { id: 'open-construction', chapter: 'now', graphic: 'wip', aspectRatio: '1120 / 430', x: '50%', y: '50%', size: '100%', mobileX: '50%', mobileY: '50%', mobileSize: '100%', rotate: '0deg', opacity: 1, layer: 0, depth: 0 },
-]
