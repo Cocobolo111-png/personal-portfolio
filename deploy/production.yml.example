@@ -1,4 +1,4 @@
-# DRAFT: not under .github/workflows, cannot trigger until explicitly activated.
+# Reference copy of the production workflow. The deploy job requires an explicit enable flag.
 name: Deploy portfolio to Aliyun
 on:
   push:
@@ -10,13 +10,10 @@ concurrency:
   group: portfolio-production
   cancel-in-progress: false
 jobs:
-  deploy:
-    if: github.ref == 'refs/heads/main' && vars.PRODUCTION_DEPLOY_ENABLED == 'true'
+  build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    environment:
-      name: production
-      url: https://create.byheyang.cn
     env:
       PORTFOLIO_BASE: /
       PORTFOLIO_ORIGIN: https://create.byheyang.cn
@@ -38,6 +35,26 @@ jobs:
           PORTFOLIO_ORIGIN: https://create.byheyang.cn
       - run: node scripts/deploy/manifest.mjs
       - run: node scripts/deploy/check-dist.mjs
+      - uses: actions/upload-artifact@v7
+        with:
+          name: portfolio-production
+          path: dist
+          if-no-files-found: error
+          retention-days: 14
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && vars.PRODUCTION_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: production
+      url: https://create.byheyang.cn
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: portfolio-production
+          path: dist
       - name: Upload and atomically activate
         shell: bash
         env:
