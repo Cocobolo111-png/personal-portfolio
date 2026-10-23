@@ -96,6 +96,8 @@ pnpm preview
 
 此时预览入口为终端显示地址下的 `/personal-portfolio/`。不要把本地未验收的迭代与文档更新一起发布。
 
+阿里云独立域名上线准备、环境审计、生产工作流草案及回滚方法见 [部署文档](deploy/README.md)。正式域名尚待备案状态同步与公网 HTTPS 验收，当前公开入口仍保留 GitHub Pages。
+
 ## Project Status · 持续打磨中
 
 当前公开版本包含五章节 Hero、五个项目展示入口及对应案例页。Play、Story 和 Résumé 仍是未开放或未配置的入口，不代表已完成页面或简历下载服务。

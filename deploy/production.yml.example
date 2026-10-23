@@ -1,0 +1,65 @@
+# DRAFT: not under .github/workflows, cannot trigger until explicitly activated.
+name: Deploy portfolio to Aliyun
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: portfolio-production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main' && vars.PRODUCTION_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://create.byheyang.cn
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+        env:
+          PORTFOLIO_BASE: /
+          PORTFOLIO_ORIGIN: https://create.byheyang.cn
+      - run: node scripts/deploy/manifest.mjs
+      - run: node scripts/deploy/check-dist.mjs
+      - name: Upload and atomically activate
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
+          DEPLOY_USER: ${{ vars.DEPLOY_USER }}
+          DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          test "$DEPLOY_USER" = portfolio-deploy
+          [[ "$DEPLOY_HOST" =~ ^[a-zA-Z0-9.-]+$ && "$DEPLOY_HOST" != -* ]]
+          [[ "$DEPLOY_PORT" =~ ^[0-9]+$ ]]
+          test -n "$DEPLOY_KEY" && test -n "$KNOWN_HOSTS"
+          umask 077
+          mkdir -p ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/portfolio-key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/portfolio-known-hosts
+          trap 'rm -f ~/.ssh/portfolio-key ~/.ssh/portfolio-known-hosts' EXIT
+          opts=(-i ~/.ssh/portfolio-key -p "$DEPLOY_PORT" -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$HOME/.ssh/portfolio-known-hosts" -o ConnectTimeout=15)
+          release="$GITHUB_SHA-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT"
+          ssh "${opts[@]}" "$DEPLOY_USER@$DEPLOY_HOST" "mkdir /srv/www/sites/portfolio/incoming/$release"
+          export RSYNC_RSH="ssh -i $HOME/.ssh/portfolio-key -p $DEPLOY_PORT -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/portfolio-known-hosts"
+          rsync -rtz --delete --chmod=D755,F644 dist/ "$DEPLOY_USER@$DEPLOY_HOST:/srv/www/sites/portfolio/incoming/$release/"
+          ssh "${opts[@]}" "$DEPLOY_USER@$DEPLOY_HOST" "/usr/local/libexec/portfolio-release activate $release $GITHUB_SHA"
+      - name: Verify public HTTPS
+        run: |
+          curl -fsS --retry 3 --max-time 20 https://create.byheyang.cn/deployment.json | grep -F '"commit":"'"$GITHUB_SHA"'"'

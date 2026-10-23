@@ -14,6 +14,7 @@ dist/
 *.p12
 *.pfx
 .aws/
+/deploy/local/
 .ssh/
 .codex/
 .agents/

@@ -1,0 +1,21 @@
+# Merge this independent host into the EXISTING Caddy configuration only after audit.
+# Do not enable the factory :80 default site. Preserve other host blocks/imports.
+create.byheyang.cn {
+    root * /srv/www/sites/portfolio/current
+    encode zstd gzip
+    @revalidate not path /assets/* /projects/* /hero/*
+    header @revalidate Cache-Control "no-cache"
+    header X-Content-Type-Options nosniff
+    @hashed path /assets/*
+    header @hashed Cache-Control "public, max-age=31536000, immutable"
+    @media path /projects/* /hero/*
+    header @media Cache-Control "public, max-age=3600"
+    @private path /.git/* /.env* /.verified /SHA256SUMS
+    respond @private 404
+    # Existing build-pages.mjs emits /work/<slug>/index.html. No SPA fallback.
+    # Keep the slashless canonical route; both forms and refresh work.
+    file_server {
+        disable_canonical_uris
+    }
+    log
+}
