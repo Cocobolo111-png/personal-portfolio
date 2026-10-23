@@ -17,6 +17,9 @@ jobs:
     environment:
       name: production
       url: https://create.byheyang.cn
+    env:
+      PORTFOLIO_BASE: /
+      PORTFOLIO_ORIGIN: https://create.byheyang.cn
     steps:
       - uses: actions/checkout@v7
         with:
@@ -38,7 +41,7 @@ jobs:
       - name: Upload and atomically activate
         shell: bash
         env:
-          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_PORT: ${{ vars.DEPLOY_PORT }}
           DEPLOY_USER: ${{ vars.DEPLOY_USER }}
           DEPLOY_KEY: ${{ secrets.DEPLOY_SSH_KEY }}

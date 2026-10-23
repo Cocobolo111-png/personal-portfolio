@@ -8,7 +8,12 @@
 GitHub main → Actions（Node 22 / pnpm 10）→ SSH + rsync → 独立目录 → Caddy 自动 HTTPS。
 服务器已安装 Caddy，复用它比安装 Nginx 侵入更小；无需新增数据库、Docker、PM2 或常驻 Node。
 
-建议目录（最终启用前再次核对，当前未创建）：
+准备状态：专用部署账户、独立目录、root 所有的发布脚本及 production Environment 已配置，
+专用公钥登录和目录写权限已实测。Environment 只允许 main，连接地址及凭证保存在 Secrets，
+`PRODUCTION_DEPLOY_ENABLED=false`。尚未创建线上 current/previous、启用公网 Caddy 或复制生产工作流。
+后续按以下清单核对已完成项即可，不重复创建用户、覆盖密钥或重置 Environment。
+
+部署目录（最终启用前再次核对；current/previous 等由首次正式发布创建）：
 
 ```text
 /srv/www/sites/portfolio/
@@ -54,8 +59,8 @@ GitHub Pages 保留原有 `.github/workflows/pages.yml`，继续使用 `/persona
    通过控制台 `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub` 核对 Host Key 指纹后，保存对应 known_hosts 行；非 22 端口使用 `[host]:port` 格式。
    不把私钥、密码或 AccessKey 放进聊天或 Git。可使用已核验的本机 known_hosts，不盲信新的 ssh-keyscan 结果。
 6. 在仓库 Settings → Environments → production 限制 Deployment branches 为 **main**。
-   Secrets：`DEPLOY_SSH_KEY`、`DEPLOY_KNOWN_HOSTS`。
-   Variables：`DEPLOY_HOST`（实际服务器地址）、`DEPLOY_PORT`（实际 SSH 端口）、`DEPLOY_USER=portfolio-deploy`。
+   Secrets：`DEPLOY_SSH_KEY`、`DEPLOY_KNOWN_HOSTS`、`DEPLOY_HOST`（实际服务器地址）。
+   Variables：`DEPLOY_PORT`（实际 SSH 端口）、`DEPLOY_USER=portfolio-deploy`。
    仓库 Actions variable `PRODUCTION_DEPLOY_ENABLED` 仍保持不存在/false。
 7. 只从已验收并合并 main 的提交构建，上传到 incoming，核对 SHA256SUMS。
    首次没有 HTTPS 时，先在独立回环 Caddy 预览验收，建立初始 current 指针；不要把首次证书签发包装成健康发布。
