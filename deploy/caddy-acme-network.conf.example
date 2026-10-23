@@ -1,0 +1,4 @@
+# Scoped to Caddy's outbound HTTP client; incoming website HTTP/2 stays enabled.
+# Use when the existing network times out on ACME HTTP/2 response headers.
+[Service]
+Environment=GODEBUG=http2client=0

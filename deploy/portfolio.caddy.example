@@ -1,6 +1,9 @@
 # Merge this independent host into the EXISTING Caddy configuration only after audit.
 # Do not enable the factory :80 default site. Preserve other host blocks/imports.
 create.byheyang.cn {
+    tls {
+        issuer acme https://acme-v02.api.letsencrypt.org/directory
+    }
     root * /srv/www/sites/portfolio/current
     encode zstd gzip
     @revalidate not path /assets/* /projects/* /hero/*

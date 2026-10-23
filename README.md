@@ -8,7 +8,7 @@
 
 ![何扬个人作品集 V0.3 线上首页：白色画布、黑蓝中文大字与问号细节。截图来自已发布版本。](docs/images/portfolio-hero.webp)
 
-**[在线作品集 →](https://cocobolo111-png.github.io/personal-portfolio/)** · [GitHub 个人主页](https://github.com/Cocobolo111-png)
+**[正式作品集 →](https://create.byheyang.cn/)** · [GitHub Pages 预览](https://cocobolo111-png.github.io/personal-portfolio/) · [GitHub 个人主页](https://github.com/Cocobolo111-png)
 
 ## About the Portfolio · 通过作品，认识我
 
@@ -24,21 +24,21 @@
 
 智能训练记录与专业反馈，连接逐组记录、历史对比和下一次训练参考。
 
-[查看案例](https://cocobolo111-png.github.io/personal-portfolio/work/traintrace) · [GitHub](https://github.com/Cocobolo111-png/TrainTrace-Coach) · [产品体验](https://cocobolo111-png.github.io/TrainTrace-Coach/)
+[查看案例](https://create.byheyang.cn/work/traintrace) · [GitHub](https://github.com/Cocobolo111-png/TrainTrace-Coach) · [产品体验](https://cocobolo111-png.github.io/TrainTrace-Coach/)
 
 ### Love Journal
 
 把日常、影像和重要日期组织成一个可慢慢进入的情侣回忆空间。
 
-[查看案例](https://cocobolo111-png.github.io/personal-portfolio/work/love-journal) · [GitHub](https://github.com/Cocobolo111-png/love-journal)
+[查看案例](https://create.byheyang.cn/work/love-journal) · [GitHub](https://github.com/Cocobolo111-png/love-journal)
 
 ### AI Content Growth OS
 
 将内容诊断、版本留存与人工决策整理为可追溯的流程；工具实践持续迭代，尚未证明带来增长效果。
 
-[查看案例](https://cocobolo111-png.github.io/personal-portfolio/work/ai-content-growth-os)
+[查看案例](https://create.byheyang.cn/work/ai-content-growth-os)
 
-线上还收录了 AI 视频生产工作台与盘两下，可从 [Selected Work](https://cocobolo111-png.github.io/personal-portfolio/#work) 继续浏览。案例上线不等于对应产品已公开部署；演示数据、历史材料和真实实现的边界以各案例标注为准。
+线上还收录了 AI 视频生产工作台与盘两下，可从 [Selected Work](https://create.byheyang.cn/#work) 继续浏览。案例上线不等于对应产品已公开部署；演示数据、历史材料和真实实现的边界以各案例标注为准。
 
 ## Design & Interaction · 让表达有层次
 
@@ -96,7 +96,7 @@ pnpm preview
 
 此时预览入口为终端显示地址下的 `/personal-portfolio/`。不要把本地未验收的迭代与文档更新一起发布。
 
-阿里云独立域名上线准备、环境审计、生产工作流草案及回滚方法见 [部署文档](deploy/README.md)。正式域名尚待备案状态同步与公网 HTTPS 验收，当前公开入口仍保留 GitHub Pages。
+正式站点通过独立的 [生产工作流](.github/workflows/production.yml) 构建到阿里云，由 Caddy 托管静态文件并自动管理 HTTPS。main 合并后自动发布，GitHub Pages 继续作为独立预览环境。部署检查、凭证管理及回滚方法见 [部署文档](deploy/README.md)。
 
 ## Project Status · 持续打磨中
 
