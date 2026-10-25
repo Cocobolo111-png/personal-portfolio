@@ -1,10 +1,47 @@
+/* Brand boot: the static tile field owns the first paint, then releases the
+   page in a staggered pixel collapse. The overlay is inert if JS or CSS fails. */
+#boot-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  overflow: hidden;
+  pointer-events: auto;
+  background: #1646e8;
+  animation: boot-veil-away 1ms linear 1000ms forwards, boot-base-out 260ms linear 180ms forwards;
+}
+#boot-reveal > span {
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  background: #1646e8;
+  box-shadow: 0 0 0 1px #1646e8;
+  transform-origin: center;
+  animation: boot-pixel-out var(--duration, 420ms) cubic-bezier(.7, 0, .84, 0) var(--delay, 0ms) forwards;
+  will-change: transform, opacity;
+}
+html.boot-intro .intro__line-inner { animation-delay: 320ms; }
+html.boot-intro .intro__statement-line:nth-child(2) .intro__line-inner { animation-delay: 390ms; }
+html.boot-intro .intro__description { animation-delay: 540ms; }
+@keyframes boot-pixel-out {
+  0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1.03) rotate(0deg); }
+  55% { opacity: 1; }
+  100% { opacity: 0; transform: translate3d(var(--dx, 0px), var(--dy, 0px), 0) scale(.02) rotate(var(--rot, 0deg)); }
+}
+@keyframes boot-base-out {
+  to { background-color: transparent; }
+}
+@keyframes boot-veil-away {
+  to { visibility: hidden; pointer-events: none; }
+}
+
 /* Stage A: a centered, kinetic introduction. Work keeps its existing layout. */
 .portfolio-nav { position: fixed; z-index: 20; top: 0; left: 50%; display: flex; align-items: center; justify-content: space-between; width: min(100%, var(--container)); height: 100px; padding-inline: var(--page-pad); transform: translateX(-50%); transition: background 240ms ease; }
 .portfolio-nav--scrolled { background: var(--color-bg); box-shadow: 0 1px 0 var(--color-border); }
-.personal-brand { display: inline-flex; align-items: center; gap: 13px; }
-.personal-brand__mark { display: block; font-size: 43px; font-style: italic; font-weight: 850; letter-spacing: -.04em; line-height: 1; }
-.personal-brand__mark > span { color: var(--color-accent); }
-.personal-brand__name { display: grid; gap: 2px; font-size: 14px; font-weight: 650; line-height: 1.4; }
+.personal-brand { display: inline-flex; align-items: center; gap: 14px; }
+.personal-brand__mark { display: block; color: #161616; font-size: 43px; font-style: italic; font-weight: 900; letter-spacing: -.085em; line-height: .92; }
+.personal-brand__mark::after { content: ''; display: inline-block; width: 9px; height: 7px; margin-left: 3px; background: #1646e8; transform: skewX(-20deg); vertical-align: baseline; }
+.personal-brand__name { display: grid; gap: 2px; font-size: 15px; font-weight: 700; letter-spacing: .01em; line-height: 1.4; }
 .personal-brand__name > span { color: var(--color-muted); font-size: 10px; font-weight: 500; letter-spacing: .12em; }
 .portfolio-nav__links { display: flex; align-items: center; gap: 32px; font-size: 14px; font-weight: 550; }
 .portfolio-nav__links > a, .portfolio-nav__links > button { display: inline-flex; align-items: center; gap: 5px; min-height: 44px; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; transition: color var(--transition-fast); }
@@ -97,9 +134,10 @@
   .intro :focus-visible, .portfolio-nav :focus-visible { outline-color: var(--color-accent); }
   .intro ::selection, .portfolio-nav ::selection { background: var(--color-accent); color: #fff; }
   .portfolio-nav { height: 100px; padding-inline: 64px; }
-  .personal-brand { gap: 16px; }
-  .personal-brand__mark { font-size: 46px; font-weight: 850; }
-  .personal-brand__name { font-size: 16px; }
+  .personal-brand { gap: 17px; }
+  .personal-brand__mark { font-size: 48px; font-weight: 900; letter-spacing: -.09em; line-height: .95; }
+  .personal-brand__mark::after { width: 11px; height: 8px; margin-left: 3px; }
+  .personal-brand__name { font-size: 19px; font-weight: 700; letter-spacing: .015em; }
   .personal-brand__name > span { display: none; }
   .portfolio-nav__links { gap: 12px; font-size: 14px; }
   .portfolio-nav__links > a, .portfolio-nav__links > button {
@@ -118,8 +156,8 @@
   }
   .intro::after { display: none; }
   .intro::before { content: ''; position: absolute; inset: 0 calc((100% - 100vw) / 2); z-index: -1; background: #fff; }
-  .intro__body { max-width: 1120px; margin-inline: auto; transform: none; }
-  .intro-tabs { position: relative; display: flex; justify-content: space-between; width: 850px; margin-inline: auto; padding: 0; gap: 22px; border: 0; border-radius: 0; background: none; }
+  .intro__body { max-width: 1000px; margin-inline: auto; transform: none; }
+  .intro-tabs { position: relative; display: flex; justify-content: space-between; width: 780px; margin-inline: auto; padding: 0; gap: 22px; border: 0; border-radius: 0; background: none; }
   .intro-tabs button { min-height: 44px; padding: 0 0 8px; border-radius: 0; color: #4e4e4e; font-size: 12px; font-weight: 700; letter-spacing: .04em; transition: color 160ms ease, opacity 120ms ease; }
   .intro-tabs button:hover { color: #1646e8; background: none; }
   .intro-tabs button[aria-selected='true'] { color: #1646e8; background: none; box-shadow: none; }
@@ -136,14 +174,14 @@
   .intro .intro__statement-line { width: max-content; max-width: 100%; }
   .intro__statement-line + .intro__statement-line { margin-top: 7px; }
   .intro .intro__blue { color: #1646e8; }
-  .intro__description { width: 64%; max-width: 680px; min-height: 92px; margin: 28px 0 0; text-align: left; color: #414141; font-size: 17px; line-height: 1.85; }
+  .intro__description { width: 64%; max-width: 620px; min-height: 92px; margin: 28px 0 0; text-align: left; color: #414141; font-size: 17px; line-height: 1.85; }
 
   /* Two complete typographic spreads, without a reserved illustration slot. */
-  .intro .intro__statement--who { top: 34px; left: 28px; font-size: clamp(74px, 7.2vw, 104px); line-height: 1.23; font-weight: 850; }
+  .intro .intro__statement--who { top: 34px; left: 0; font-size: clamp(70px, 6.8vw, 96px); line-height: 1.23; font-weight: 850; }
   .intro__statement--who .intro__statement-line + .intro__statement-line { margin-top: 10px; margin-left: 88px; }
   .intro__curiosity-mark {
-    display: block; position: absolute; top: 0; right: 54px;
-    color: #1646e8; font-size: 190px; font-weight: 500; line-height: 1;
+    display: block; position: absolute; top: 0; right: 26px;
+    color: #1646e8; font-size: 180px; font-weight: 500; line-height: 1;
     pointer-events: auto; user-select: none; cursor: default;
     translate: var(--mark-x, 0px) var(--mark-y, 0px);
     rotate: calc(12deg + var(--mark-tilt, 0deg));
@@ -152,14 +190,15 @@
     animation: hero-mark-in 700ms var(--ease-out) 340ms backwards;
   }
   .intro__curiosity-mark:hover { scale: 1.045; }
-  .intro--who .intro__description { margin-left: 28px; }
-  .intro .intro__statement--build { top: 64px; left: 28px; font-size: clamp(66px, 6.25vw, 90px); line-height: 1.28; font-weight: 850; }
+  html.boot-intro .intro__curiosity-mark { animation-delay: 650ms; }
+  .intro--who .intro__description { margin-left: 0; }
+  .intro .intro__statement--build { top: 64px; left: 0; font-size: clamp(62px, 5.9vw, 84px); line-height: 1.28; font-weight: 850; }
   .intro__statement--build .intro__statement-line + .intro__statement-line { margin-top: 14px; margin-left: 76px; }
   .intro__statement--build .intro__blue { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .16em; }
-  .intro--build .intro__description { margin-left: 28px; }
+  .intro--build .intro__description { margin-left: 0; }
 
   /* One geometric family; clear separation keeps the words in the foreground. */
-  .hero-art { display: block; top: 0; right: -4px; width: clamp(270px, 28vw, 350px); aspect-ratio: 1; }
+  .hero-art { display: block; top: 0; right: -4px; width: clamp(260px, 22vw, 310px); aspect-ratio: 1; }
   .hero-art--believe { top: 0; }
   .hero-art--now { top: 0; }
   .intro__foot { bottom: 30px; }
@@ -184,6 +223,7 @@
   .intro-tabs button { padding-inline: 8px; font-size: 9px; }
 }
 @media (prefers-reduced-motion: reduce) {
+  #boot-reveal { display: none !important; }
   .intro__body { transform: none; }
   .intro__chapter { translate: none; }
   .intro__line-inner, .intro__description, .intro__curiosity-mark, .intro__scroll-icon { animation: none; }

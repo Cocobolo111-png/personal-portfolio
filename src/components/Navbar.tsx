@@ -24,7 +24,7 @@ export function Navbar({ homeHref = '' }: { homeHref?: string }) {
   return (
     <header className={`portfolio-nav ${scrolled ? 'portfolio-nav--scrolled' : ''}`}>
       <a className="personal-brand" href={`${homeHref}#top`} aria-label="何扬，返回首页顶部">
-        <span className="personal-brand__mark">hy<span>.</span></span>
+        <span className="personal-brand__mark" aria-hidden="true">hy</span>
         <span className="personal-brand__name">{profile.name}<span>{profile.romanName}</span></span>
       </a>
       <nav className="portfolio-nav__links" aria-label="主导航">

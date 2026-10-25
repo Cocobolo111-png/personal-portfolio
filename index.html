@@ -6,9 +6,58 @@
     <meta name="description" content="何扬的 AI 产品、运营与增长作品集。" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>何扬 — AI Product / Operations / Growth</title>
+    <script>
+      (() => {
+        try {
+          const path = (location.pathname.replace(/\/index\.html$/, '').replace(/\/+$/, '') || '') + '/'
+          if (/^(\/[^/]+)?\/$/.test(path) && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('boot-intro')
+            window.setTimeout(() => document.documentElement.classList.remove('boot-intro'), 2000)
+          }
+        } catch {}
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <div id="boot-reveal" aria-hidden="true"></div>
+    <script>
+      (() => {
+        const boot = document.getElementById('boot-reveal')
+        if (!boot) return
+        const path = (location.pathname.replace(/\/index\.html$/, '').replace(/\/+$/, '') || '') + '/'
+        const home = /^(\/[^/]+)?\/$/.test(path)
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        if (!home || reduced) { boot.remove(); return }
+        document.documentElement.classList.add('boot-intro')
+        const cell = Math.max(62, Math.min(128, Math.round(Math.min(innerWidth, innerHeight) / 6.5)))
+        const cols = Math.max(5, Math.ceil(innerWidth / cell))
+        const rows = Math.max(4, Math.ceil(innerHeight / cell))
+        boot.style.gridTemplateColumns = `repeat(${cols}, 1fr)`
+        boot.style.gridTemplateRows = `repeat(${rows}, 1fr)`
+        const centerX = (cols - 1) / 2
+        const centerY = (rows - 1) / 2
+        for (let row = 0; row < rows; row += 1) {
+          for (let col = 0; col < cols; col += 1) {
+            const index = row * cols + col
+            const tile = document.createElement('span')
+            const dx = (col - centerX) * (6 + (index % 3) * 1.7)
+            const dy = (row - centerY) * (5 + (index % 4) * 1.4)
+            const rotate = (((index * 13) % 11) - 5) * .75
+            tile.style.setProperty('--dx', `${dx.toFixed(1)}px`)
+            tile.style.setProperty('--dy', `${dy.toFixed(1)}px`)
+            tile.style.setProperty('--rot', `${rotate.toFixed(1)}deg`)
+            tile.style.setProperty('--delay', `${70 + col * 17 + row * 27 + (index * 19) % 31}ms`)
+            tile.style.setProperty('--duration', `${380 + (index * 11) % 110}ms`)
+            boot.appendChild(tile)
+          }
+        }
+        window.setTimeout(() => {
+          document.documentElement.classList.remove('boot-intro')
+          boot.remove()
+        }, 1600)
+      })()
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
