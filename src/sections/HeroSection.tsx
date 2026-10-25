@@ -1,8 +1,9 @@
 import {
   useEffect, useLayoutEffect, useRef, useState,
-  type KeyboardEvent, type PointerEvent as ReactPointerEvent,
+  type KeyboardEvent,
 } from 'react'
 import { HeroArtwork } from '../components/HeroArtwork'
+import { HeroCharacter } from '../components/HeroCharacter'
 import { heroChapters } from '../data/hero'
 
 export function HeroSection() {
@@ -13,8 +14,6 @@ export function HeroSection() {
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
   const tabsRef = useRef<HTMLDivElement>(null)
   const touchStart = useRef<{ x: number; y: number } | null>(null)
-  const markRef = useRef<HTMLSpanElement>(null)
-  const markFrame = useRef(0)
   const chapter = heroChapters[active]
 
   useEffect(() => {
@@ -45,8 +44,6 @@ export function HeroSection() {
       preference.removeEventListener('change', render)
     }
   }, [])
-
-  useEffect(() => () => cancelAnimationFrame(markFrame.current), [])
 
   // One ink bar travels between tabs instead of two separate outlines fading.
   useLayoutEffect(() => {
@@ -161,32 +158,6 @@ export function HeroSection() {
     return () => { cancel(); preference.removeEventListener('change', onPreference) }
   }, [active, chapter.id])
 
-  function onMarkPointerMove(event: ReactPointerEvent<HTMLSpanElement>) {
-    if (event.pointerType === 'touch' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const node = markRef.current
-    if (!node) return
-    const bounds = node.getBoundingClientRect()
-    const x = Math.max(-1, Math.min(1, (event.clientX - bounds.left - bounds.width / 2) / (bounds.width / 2)))
-    const y = Math.max(-1, Math.min(1, (event.clientY - bounds.top - bounds.height / 2) / (bounds.height / 2)))
-    cancelAnimationFrame(markFrame.current)
-    markFrame.current = requestAnimationFrame(() => {
-      markFrame.current = 0
-      node.style.setProperty('--mark-x', `${(x * 5).toFixed(2)}px`)
-      node.style.setProperty('--mark-y', `${(y * 4).toFixed(2)}px`)
-      node.style.setProperty('--mark-tilt', `${(x * 2.4).toFixed(2)}deg`)
-    })
-  }
-
-  function resetMark() {
-    cancelAnimationFrame(markFrame.current)
-    markFrame.current = 0
-    const node = markRef.current
-    if (!node) return
-    node.style.setProperty('--mark-x', '0px')
-    node.style.setProperty('--mark-y', '0px')
-    node.style.setProperty('--mark-tilt', '0deg')
-  }
-
   function onTabKey(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     let next: number
     if (event.key === 'ArrowRight') next = (index + 1) % heroChapters.length
@@ -231,10 +202,7 @@ export function HeroSection() {
                   </span>
                 ))}
               </h1>
-              {chapter.id === 'who' && (
-                <span ref={markRef} className="intro__curiosity-mark" aria-hidden="true"
-                  onPointerMove={onMarkPointerMove} onPointerLeave={resetMark}>?</span>
-              )}
+              <HeroCharacter active={chapter.id === 'who'} />
               <HeroArtwork chapter={chapter.id} />
             </div>
             <p className="intro__description">{chapter.description}</p>

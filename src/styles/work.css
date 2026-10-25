@@ -1,9 +1,3 @@
-@property --glass-end {
-  syntax: '<percentage>';
-  inherits: false;
-  initial-value: 58%;
-}
-
 /* Measured Sanvi geometry: 420px stage, 500px folder, 50% -> 90% image.
    Three masked backdrop layers create progressive lower fog. The canvas
    fades independently so the expanded image can stay completely clear. */
@@ -85,50 +79,6 @@
   background: #25261a;
 }
 .work-showcase__mockup .project-visual img { width: 100%; height: auto; display: block; }
-
-/* Pilot: one real image, a blurred copy and a travelling feather mask.
-   Clear and blurred pixels share one transform, so they cannot drift apart. */
-.work-showcase--glass-pilot .work-showcase__mockup {
-  overflow: hidden;
-  border-radius: 7px;
-  background: #25261a;
-}
-.work-showcase--glass-pilot .work-showcase__mockup-clear {
-  --glass-end: 32%;
-  position: relative;
-  z-index: 2;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(var(--glass-end) - 6%), transparent calc(var(--glass-end) + 6%), transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 calc(var(--glass-end) - 6%), transparent calc(var(--glass-end) + 6%), transparent 100%);
-  transition: --glass-end 900ms cubic-bezier(.22, .75, .2, 1);
-}
-.work-showcase--glass-pilot.is-revealed .work-showcase__mockup-clear { --glass-end: 50%; }
-.work-showcase--glass-pilot .work-showcase__glass-copy {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  overflow: hidden;
-  border-radius: 7px;
-  background: #25261a;
-  pointer-events: none;
-}
-.work-showcase--glass-pilot .work-showcase__glass-copy img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.04);
-  filter: blur(10px) saturate(1.3) contrast(1.08) brightness(.98);
-}
-.work-showcase--glass-pilot .work-showcase__glass-copy::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: #ffffff00;
-}
-.work-showcase--glass-pilot .work-showcase__stage:is(:hover, :focus-within) .work-showcase__mockup-clear {
-  --glass-end: 112%;
-  transition-duration: 620ms;
-}
 .work-showcase__fog {
   position: absolute;
   z-index: 2;
@@ -218,14 +168,8 @@
   .work-showcase__caption h3 { font-size: 24px; }
   .work-showcase__caption p { font-size: 14px; }
 }
-@supports not (filter: blur(1px)) {
-  .work-showcase--glass-pilot .work-showcase__mockup-clear { -webkit-mask-image: none; mask-image: none; }
-  .work-showcase--glass-pilot .work-showcase__glass-copy { display: none; }
-}
 @media (prefers-reduced-motion: reduce) {
   .work-showcase__stage * { transition: none; transition-duration: 0s !important; }
-  .work-showcase--glass-pilot .work-showcase__mockup-clear,
-  .work-showcase--glass-pilot .work-showcase__stage:is(:hover, :focus-within) .work-showcase__mockup-clear { --glass-end: 50%; }
 }
 
 /* Mobile products keep their original screen proportions inside the existing card. */

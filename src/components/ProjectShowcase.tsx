@@ -1,31 +1,9 @@
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
+import type { CSSProperties, PointerEvent } from 'react'
 import type { Project } from '../data/projects'
 import { ArrowIcon } from './ArrowIcon'
 import { ProjectVisual } from './ProjectVisual'
 
 export function ProjectShowcase({ project }: { project: Project }) {
-  const glassImage = project.slug === 'ai-video-workbench' && project.visual.kind === 'image' ? project.visual.image : null
-  const isGlassPilot = Boolean(project.showcase && glassImage)
-  const glassRef = useRef<HTMLElement>(null)
-  const [glassRevealed, setGlassRevealed] = useState(false)
-
-  useEffect(() => {
-    if (!isGlassPilot) return
-    const node = glassRef.current
-    if (!node) return
-    if (typeof IntersectionObserver === 'undefined' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setGlassRevealed(true)
-      return
-    }
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return
-      setGlassRevealed(true)
-      observer.disconnect()
-    }, { threshold: .35, rootMargin: '0px 0px -8% 0px' })
-    observer.observe(node)
-    return () => observer.disconnect()
-  }, [isGlassPilot])
-
   if (project.showcase) {
     const { showcase } = project
     const rows = { left: 0, right: 0 }
@@ -57,7 +35,7 @@ export function ProjectShowcase({ project }: { project: Project }) {
     }
 
     return (
-      <article ref={glassRef} className={`work-showcase${showcase.portrait ? ' work-showcase--portrait' : ''}${isGlassPilot ? ' work-showcase--glass-pilot' : ''}${glassRevealed ? ' is-revealed' : ''}`} style={theme} aria-labelledby={`${project.slug}-title`}>
+      <article className={`work-showcase${showcase.portrait ? ' work-showcase--portrait' : ''}`} style={theme} aria-labelledby={`${project.slug}-title`}>
         <Stage className="work-showcase__stage" href={project.caseStudyUrl} tabIndex={0} aria-label={project.caseStudyUrl ? `${project.title}，查看项目案例` : `${project.title}，聚焦以展开界面预览`}
           onPointerMove={positionPreview}
           onFocus={(event) => {
@@ -72,23 +50,14 @@ export function ProjectShowcase({ project }: { project: Project }) {
                 style={{ '--tag-row': tag.row, '--tag-rotation': `${tag.rotation}deg`, '--tag-expanded-rotation': `${tag.expandedRotation}deg` } as CSSProperties}>{tag.label}</span>
             ))}
           </div>
-          <div className="work-showcase__mockup">
-            {glassImage && (
-              <div className="work-showcase__glass-copy" aria-hidden="true">
-                <img src={glassImage.src} alt="" loading="lazy" decoding="async" />
-              </div>
-            )}
-            {glassImage ? <div className="work-showcase__mockup-clear"><ProjectVisual project={project} /></div> : <ProjectVisual project={project} />}
-          </div>
-          {!glassImage && (
-            <div className="work-showcase__fog" aria-hidden="true">
-              <div className="work-showcase__fog-field">
-                <span className="work-showcase__blur work-showcase__blur--near" />
-                <span className="work-showcase__blur work-showcase__blur--middle" />
-                <span className="work-showcase__blur work-showcase__blur--far" />
-              </div>
+          <div className="work-showcase__mockup"><ProjectVisual project={project} /></div>
+          <div className="work-showcase__fog" aria-hidden="true">
+            <div className="work-showcase__fog-field">
+              <span className="work-showcase__blur work-showcase__blur--near" />
+              <span className="work-showcase__blur work-showcase__blur--middle" />
+              <span className="work-showcase__blur work-showcase__blur--far" />
             </div>
-          )}
+          </div>
           {showcase.demoUrl && !project.caseStudyUrl ? (
             <a className="work-showcase__cta" href={showcase.demoUrl} target="_blank" rel="noreferrer">{showcase.ctaLabel}<ArrowIcon /></a>
           ) : (

@@ -38,8 +38,8 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
 /* Stage A: a centered, kinetic introduction. Work keeps its existing layout. */
 .portfolio-nav { position: fixed; z-index: 20; top: 0; left: 50%; display: flex; align-items: center; justify-content: space-between; width: min(100%, var(--container)); height: 100px; padding-inline: var(--page-pad); transform: translateX(-50%); transition: background 240ms ease; }
 .portfolio-nav--scrolled { background: var(--color-bg); box-shadow: 0 1px 0 var(--color-border); }
-.personal-brand { display: inline-flex; align-items: center; gap: 12px; }
-.personal-brand__mark { display: block; color: #161616; font-size: 38px; font-style: italic; font-weight: 900; letter-spacing: -.085em; line-height: .95; }
+.personal-brand { display: inline-flex; align-items: center; gap: 14px; }
+.personal-brand__mark { display: block; color: #161616; font-size: 43px; font-style: italic; font-weight: 900; letter-spacing: -.085em; line-height: .92; }
 .personal-brand__mark::after { content: ''; display: inline-block; width: 9px; height: 7px; margin-left: 3px; background: var(--brand-blue); transform: skewX(-20deg); vertical-align: baseline; }
 .personal-brand__name { display: grid; gap: 2px; font-size: 15px; font-weight: 700; letter-spacing: .01em; line-height: 1.4; }
 .personal-brand__name > span { color: var(--color-muted); font-size: 10px; font-weight: 500; letter-spacing: .12em; }
@@ -68,7 +68,7 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
 .intro__statement-line:nth-child(2) .intro__line-inner { animation-delay: 70ms; }
 .intro .intro__blue { color: var(--color-accent); }
 .intro__description { max-width: 420px; min-height: 57px; margin: 26px auto 0; color: var(--color-ink-soft); font-size: 15px; line-height: 1.9; text-wrap: pretty; animation: hero-copy-in 560ms var(--ease-out) 260ms backwards; }
-.intro__curiosity-mark, .hero-art { display: none; }
+.hero-art { display: none; }
 .hero-art { position: absolute; pointer-events: none; color: var(--color-accent); }
 .hero-art__graphic { display: block; width: 100%; height: 100%; overflow: visible; }
 .hero-art__wip { fill: white; font: 800 29px var(--font-sans); letter-spacing: -.02em; }
@@ -92,11 +92,6 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
   72% { transform: translateY(3px); }
   84% { transform: translateY(0); }
 }
-@keyframes hero-mark-in {
-  from { opacity: 0; translate: 0 16px; rotate: 5deg; scale: .93; }
-  to { opacity: 1; translate: 0 0; rotate: 12deg; scale: 1; }
-}
-
 /* Existing small-screen fallback: new copy stays readable; no new art layout. */
 @media (max-width: 1000px) {
   .intro { min-height: 780px; }
@@ -133,23 +128,23 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
   }
   .intro :focus-visible, .portfolio-nav :focus-visible { outline-color: var(--color-accent); }
   .intro ::selection, .portfolio-nav ::selection { background: var(--color-accent); color: #fff; }
-  .portfolio-nav { width: min(calc(100% - 112px), 980px); height: 100px; padding-inline: 0; }
-  .personal-brand { gap: 14px; }
-  .personal-brand__mark { font-size: 38px; font-weight: 900; letter-spacing: -.09em; line-height: .95; }
-  .personal-brand__mark::after { width: 9px; height: 7px; margin-left: 3px; }
-  .personal-brand__name { font-size: 18px; font-weight: 700; letter-spacing: .015em; }
+  .portfolio-nav { height: 100px; padding-inline: 64px; }
+  .personal-brand { gap: 17px; }
+  .personal-brand__mark { font-size: 48px; font-weight: 900; letter-spacing: -.09em; line-height: .95; }
+  .personal-brand__mark::after { width: 11px; height: 8px; margin-left: 3px; }
+  .personal-brand__name { font-size: 19px; font-weight: 700; letter-spacing: .015em; }
   .personal-brand__name > span { display: none; }
-  .portfolio-nav__links { gap: 8px; font-size: 13px; }
+  .portfolio-nav__links { gap: 12px; font-size: 14px; }
   .portfolio-nav__links > a, .portfolio-nav__links > button {
-    justify-content: center; min-height: 36px; padding: 0 17px;
-    border: 1px solid #d9d9df; border-radius: 13px; background: #fff;
-    color: #161616; font-size: 13px; font-weight: 600;
+    justify-content: center; min-height: 38px; padding: 0 21px;
+    border: 1px solid #d9d9df; border-radius: 16px; background: #fff;
+    color: #161616; font-weight: 600;
   }
   .portfolio-nav__links > a:hover, .portfolio-nav__links > button:hover { color: var(--brand-blue); border-color: var(--brand-blue); }
   .portfolio-nav__links > .portfolio-nav__work { color: #fff; border-color: var(--brand-blue); background: var(--brand-blue); }
   .portfolio-nav__links > .portfolio-nav__work:hover { color: #fff; background: var(--brand-blue-deep); }
   .portfolio-nav__work > span, .portfolio-nav__links > button svg { display: none; }
-  .portfolio-nav__notice { right: 0; background: #161616; color: #fff; box-shadow: none; }
+  .portfolio-nav__notice { right: 64px; background: #161616; color: #fff; box-shadow: none; }
   .intro {
     justify-content: flex-start; min-height: 820px; max-height: 1120px;
     padding: 146px 56px 130px; overflow: visible; background: #fff;
@@ -179,18 +174,6 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
   /* Two complete typographic spreads, without a reserved illustration slot. */
   .intro .intro__statement--who { top: 34px; left: 0; font-size: clamp(70px, 6.8vw, 96px); line-height: 1.23; font-weight: 850; }
   .intro__statement--who .intro__statement-line + .intro__statement-line { margin-top: 10px; margin-left: 88px; }
-  .intro__curiosity-mark {
-    display: block; position: absolute; top: 0; right: 26px;
-    color: var(--brand-blue); font-size: clamp(150px, 12.5vw, 180px); font-weight: 500; line-height: 1;
-    pointer-events: auto; user-select: none; cursor: default;
-    translate: var(--mark-x, 0px) var(--mark-y, 0px);
-    rotate: calc(12deg + var(--mark-tilt, 0deg));
-    scale: 1;
-    transition: translate 220ms var(--ease-out), rotate 260ms var(--ease-out), scale 260ms var(--ease-out);
-    animation: hero-mark-in 700ms var(--ease-out) 340ms backwards;
-  }
-  .intro__curiosity-mark:hover { scale: 1.045; }
-  html.boot-intro .intro__curiosity-mark { animation-delay: 650ms; }
   .intro--who .intro__description { margin-left: 0; }
   .intro .intro__statement--build { top: 64px; left: 0; font-size: clamp(62px, 5.9vw, 84px); line-height: 1.28; font-weight: 850; }
   .intro__statement--build .intro__statement-line + .intro__statement-line { margin-top: 14px; margin-left: 76px; }
@@ -226,9 +209,33 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
   #boot-reveal { display: none !important; }
   .intro__body { transform: none; }
   .intro__chapter { translate: none; }
-  .intro__line-inner, .intro__description, .intro__curiosity-mark, .intro__scroll-icon { animation: none; }
-  .intro__curiosity-mark { transition: none; translate: 0 0; rotate: 12deg; scale: 1; }
-  .intro__curiosity-mark:hover { scale: 1; }
+  .intro__line-inner, .intro__description, .intro__scroll-icon { animation: none; }
   .intro__scroll:hover .intro__scroll-icon, .intro__scroll:active .intro__scroll-icon, .intro__scroll:focus-visible .intro__scroll-icon,
   .portfolio-nav__links > a:active, .portfolio-nav__links > button:active { transform: none; }
+}
+
+/* The original 3:4 footage stays whole; only its empty frame edges feather. */
+.hero-character { display: none; }
+.hero-character[hidden] { display: none; }
+@media (min-width: 1001px) {
+  .intro--who .intro__body { max-width: 1120px; }
+  .intro .intro__statement--who { top: 44px; }
+  .intro__statement--who .intro__statement-line + .intro__statement-line { margin-top: 18px; margin-left: 48px; font-size: .86em; }
+  .intro--who .intro__description { width: 58%; max-width: 620px; }
+  .hero-character { display: block; position: absolute; z-index: 0; top: -44px; right: 32px; width: clamp(330px, 29.9vw, 430px); aspect-ratio: 3 / 4; margin: 0; }
+  .hero-character__media {
+    width: 100%; height: 100%; pointer-events: none; mix-blend-mode: multiply;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent), linear-gradient(0deg, transparent, #000 2%, #000 98%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent), linear-gradient(0deg, transparent, #000 2%, #000 98%, transparent);
+    -webkit-mask-composite: source-in; mask-composite: intersect;
+  }
+  .hero-character__media img, .hero-character__media video { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .hero-character__media video { position: absolute; inset: 0; opacity: 0; transition: opacity 220ms ease; }
+  .hero-character.is-ready .hero-character__media video { opacity: 1; }
+}
+@media (min-width: 1001px) and (max-height: 850px) {
+  .hero-character { top: -8px; width: clamp(300px, 27vw, 360px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-character__media video { transition: none; }
 }
