@@ -7,15 +7,15 @@
   display: grid;
   overflow: hidden;
   pointer-events: auto;
-  background: #1646e8;
+  background: var(--brand-blue);
   animation: boot-veil-away 1ms linear 1000ms forwards, boot-base-out 260ms linear 180ms forwards;
 }
 #boot-reveal > span {
   display: block;
   min-width: 0;
   min-height: 0;
-  background: #1646e8;
-  box-shadow: 0 0 0 1px #1646e8;
+  background: var(--brand-blue);
+  box-shadow: 0 0 0 1px var(--brand-blue);
   transform-origin: center;
   animation: boot-pixel-out var(--duration, 420ms) cubic-bezier(.7, 0, .84, 0) var(--delay, 0ms) forwards;
   will-change: transform, opacity;
@@ -38,9 +38,9 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
 /* Stage A: a centered, kinetic introduction. Work keeps its existing layout. */
 .portfolio-nav { position: fixed; z-index: 20; top: 0; left: 50%; display: flex; align-items: center; justify-content: space-between; width: min(100%, var(--container)); height: 100px; padding-inline: var(--page-pad); transform: translateX(-50%); transition: background 240ms ease; }
 .portfolio-nav--scrolled { background: var(--color-bg); box-shadow: 0 1px 0 var(--color-border); }
-.personal-brand { display: inline-flex; align-items: center; gap: 14px; }
-.personal-brand__mark { display: block; color: #161616; font-size: 43px; font-style: italic; font-weight: 900; letter-spacing: -.085em; line-height: .92; }
-.personal-brand__mark::after { content: ''; display: inline-block; width: 9px; height: 7px; margin-left: 3px; background: #1646e8; transform: skewX(-20deg); vertical-align: baseline; }
+.personal-brand { display: inline-flex; align-items: center; gap: 12px; }
+.personal-brand__mark { display: block; color: #161616; font-size: 38px; font-style: italic; font-weight: 900; letter-spacing: -.085em; line-height: .95; }
+.personal-brand__mark::after { content: ''; display: inline-block; width: 9px; height: 7px; margin-left: 3px; background: var(--brand-blue); transform: skewX(-20deg); vertical-align: baseline; }
 .personal-brand__name { display: grid; gap: 2px; font-size: 15px; font-weight: 700; letter-spacing: .01em; line-height: 1.4; }
 .personal-brand__name > span { color: var(--color-muted); font-size: 10px; font-weight: 500; letter-spacing: .12em; }
 .portfolio-nav__links { display: flex; align-items: center; gap: 32px; font-size: 14px; font-weight: 550; }
@@ -58,8 +58,8 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
 .intro__body { position: relative; z-index: 2; width: 100%; text-align: center; transform: translateY(calc(var(--hero-scroll) * -30px)); }
 .intro-tabs { display: inline-flex; align-items: center; gap: 4px; max-width: 100%; padding: 5px; border: 1px solid #dfe5da; border-radius: 99px; background: #eef1e8; }
 .intro-tabs button { position: relative; min-height: 44px; padding: 0 17px; border: 0; border-radius: 99px; background: transparent; color: #5b6c62; font-family: var(--font-sans); font-size: 11px; font-weight: 650; letter-spacing: .035em; white-space: nowrap; cursor: pointer; transition: background 240ms ease, color 240ms ease, box-shadow 240ms ease; }
-.intro-tabs button:hover { background: #dfe9d7; color: var(--color-ink); }
-.intro-tabs button[aria-selected='true'] { background: var(--color-ink); color: #f8f9f5; box-shadow: 0 3px 8px #183e3818; }
+.intro-tabs button:hover { background: #e6ecff; color: var(--brand-blue); }
+.intro-tabs button[aria-selected='true'] { background: var(--brand-blue); color: #f8f9f5; box-shadow: 0 3px 8px #0b36c22e; }
 .intro__panel { margin: 46px auto 0; max-width: 830px; outline-offset: 12px; touch-action: pan-y; }
 .intro__composition { position: relative; isolation: isolate; display: flex; align-items: center; justify-content: center; min-height: 260px; }
 .intro .intro__statement { position: relative; z-index: 1; margin: 0; color: var(--color-ink); font-size: clamp(48px, 5.25vw, 76px); font-weight: 800; line-height: 1.32; letter-spacing: -.035em; text-wrap: balance; }
@@ -127,29 +127,29 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
     --color-ink-soft: #414141;
     --color-muted: #666;
     --color-border: #e4e4e4;
-    --color-accent: #1646e8;
-    --color-accent-soft: #edf1ff;
+    --color-accent: var(--brand-blue);
+    --color-accent-soft: var(--brand-blue-soft);
     color: var(--color-ink);
   }
   .intro :focus-visible, .portfolio-nav :focus-visible { outline-color: var(--color-accent); }
   .intro ::selection, .portfolio-nav ::selection { background: var(--color-accent); color: #fff; }
-  .portfolio-nav { height: 100px; padding-inline: 64px; }
-  .personal-brand { gap: 17px; }
-  .personal-brand__mark { font-size: 48px; font-weight: 900; letter-spacing: -.09em; line-height: .95; }
-  .personal-brand__mark::after { width: 11px; height: 8px; margin-left: 3px; }
-  .personal-brand__name { font-size: 19px; font-weight: 700; letter-spacing: .015em; }
+  .portfolio-nav { width: min(calc(100% - 112px), 980px); height: 100px; padding-inline: 0; }
+  .personal-brand { gap: 14px; }
+  .personal-brand__mark { font-size: 38px; font-weight: 900; letter-spacing: -.09em; line-height: .95; }
+  .personal-brand__mark::after { width: 9px; height: 7px; margin-left: 3px; }
+  .personal-brand__name { font-size: 18px; font-weight: 700; letter-spacing: .015em; }
   .personal-brand__name > span { display: none; }
-  .portfolio-nav__links { gap: 12px; font-size: 14px; }
+  .portfolio-nav__links { gap: 8px; font-size: 13px; }
   .portfolio-nav__links > a, .portfolio-nav__links > button {
-    justify-content: center; min-height: 38px; padding: 0 21px;
-    border: 1px solid #d9d9df; border-radius: 16px; background: #fff;
-    color: #161616; font-weight: 600;
+    justify-content: center; min-height: 36px; padding: 0 17px;
+    border: 1px solid #d9d9df; border-radius: 13px; background: #fff;
+    color: #161616; font-size: 13px; font-weight: 600;
   }
-  .portfolio-nav__links > a:hover, .portfolio-nav__links > button:hover { color: #1646e8; border-color: #1646e8; }
-  .portfolio-nav__links > .portfolio-nav__work { color: #fff; border-color: #1646e8; background: #1646e8; }
-  .portfolio-nav__links > .portfolio-nav__work:hover { color: #fff; background: #123ac2; }
+  .portfolio-nav__links > a:hover, .portfolio-nav__links > button:hover { color: var(--brand-blue); border-color: var(--brand-blue); }
+  .portfolio-nav__links > .portfolio-nav__work { color: #fff; border-color: var(--brand-blue); background: var(--brand-blue); }
+  .portfolio-nav__links > .portfolio-nav__work:hover { color: #fff; background: var(--brand-blue-deep); }
   .portfolio-nav__work > span, .portfolio-nav__links > button svg { display: none; }
-  .portfolio-nav__notice { right: 64px; background: #161616; color: #fff; box-shadow: none; }
+  .portfolio-nav__notice { right: 0; background: #161616; color: #fff; box-shadow: none; }
   .intro {
     justify-content: flex-start; min-height: 820px; max-height: 1120px;
     padding: 146px 56px 130px; overflow: visible; background: #fff;
@@ -159,10 +159,10 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
   .intro__body { max-width: 1000px; margin-inline: auto; transform: none; }
   .intro-tabs { position: relative; display: flex; justify-content: space-between; width: 780px; margin-inline: auto; padding: 0; gap: 22px; border: 0; border-radius: 0; background: none; }
   .intro-tabs button { min-height: 44px; padding: 0 0 8px; border-radius: 0; color: #4e4e4e; font-size: 12px; font-weight: 700; letter-spacing: .04em; transition: color 160ms ease, opacity 120ms ease; }
-  .intro-tabs button:hover { color: #1646e8; background: none; }
-  .intro-tabs button[aria-selected='true'] { color: #1646e8; background: none; box-shadow: none; }
+  .intro-tabs button:hover { color: var(--brand-blue); background: none; }
+  .intro-tabs button[aria-selected='true'] { color: var(--brand-blue); background: none; box-shadow: none; }
   .intro-tabs button:active { opacity: .75; }
-  .intro-tabs::after { content: ''; position: absolute; left: 0; bottom: 3px; width: var(--tab-width, 0px); height: 2px; border-radius: 2px; background: #1646e8; pointer-events: none; transform: translate3d(var(--tab-left, 0px), 0, 0); transition: transform 320ms var(--ease-out), width 300ms var(--ease-out); }
+  .intro-tabs::after { content: ''; position: absolute; left: 0; bottom: 3px; width: var(--tab-width, 0px); height: 2px; border-radius: 2px; background: var(--brand-blue); pointer-events: none; transform: translate3d(var(--tab-left, 0px), 0, 0); transition: transform 320ms var(--ease-out), width 300ms var(--ease-out); }
   .intro__panel { max-width: none; margin: 56px auto 0; }
   .intro__chapter { translate: 0 calc(var(--hero-scroll) * -20px); }
   .intro__composition { display: block; height: 354px; min-height: 0; text-align: left; }
@@ -173,7 +173,7 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
   }
   .intro .intro__statement-line { width: max-content; max-width: 100%; }
   .intro__statement-line + .intro__statement-line { margin-top: 7px; }
-  .intro .intro__blue { color: #1646e8; }
+  .intro .intro__blue { color: var(--brand-blue); }
   .intro__description { width: 64%; max-width: 620px; min-height: 92px; margin: 28px 0 0; text-align: left; color: #414141; font-size: 17px; line-height: 1.85; }
 
   /* Two complete typographic spreads, without a reserved illustration slot. */
@@ -181,7 +181,7 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
   .intro__statement--who .intro__statement-line + .intro__statement-line { margin-top: 10px; margin-left: 88px; }
   .intro__curiosity-mark {
     display: block; position: absolute; top: 0; right: 26px;
-    color: #1646e8; font-size: 180px; font-weight: 500; line-height: 1;
+    color: var(--brand-blue); font-size: clamp(150px, 12.5vw, 180px); font-weight: 500; line-height: 1;
     pointer-events: auto; user-select: none; cursor: default;
     translate: var(--mark-x, 0px) var(--mark-y, 0px);
     rotate: calc(12deg + var(--mark-tilt, 0deg));
@@ -205,7 +205,7 @@ html.boot-intro .intro__description { animation-delay: 540ms; }
   .intro__scroll { gap: 7px; min-height: 64px; color: #686868; font-size: 12px; transition: color 160ms ease; }
   .intro__scroll-icon { width: 26px; height: 34px; border: 0; border-radius: 0; transition: transform 180ms var(--ease-out); }
   .intro__scroll-icon svg { width: 20px; height: 28px; }
-  .intro__scroll:hover, .intro__scroll:focus-visible { color: #1646e8; }
+  .intro__scroll:hover, .intro__scroll:focus-visible { color: var(--brand-blue); }
   .intro__scroll:hover .intro__scroll-icon, .intro__scroll:focus-visible .intro__scroll-icon { transform: translateY(3px); background: none; }
   .intro__scroll:active .intro__scroll-icon { transform: translateY(2px); }
   .portfolio-nav__links > a, .portfolio-nav__links > button { transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, transform 120ms ease; }

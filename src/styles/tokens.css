@@ -1,4 +1,7 @@
 :root {
+  --brand-blue: #0b36c2;
+  --brand-blue-deep: #082dab;
+  --brand-blue-soft: #edf1ff;
   --color-bg: #f8f9f5;
   --color-surface: #eff2ec;
   --color-ink: #183e38;
@@ -6,9 +9,9 @@
   --color-muted: #66736c;
   --color-border: #d8e0d6;
   --color-border-strong: #96938d;
-  --color-accent: #236b53;
-  --color-accent-on-dark: #b9e7be;
-  --color-accent-soft: #dceccd;
+  --color-accent: var(--brand-blue);
+  --color-accent-on-dark: #dce4ff;
+  --color-accent-soft: var(--brand-blue-soft);
   --color-status: #9a4c27;
   --color-mint: #b9e7be;
   --color-orange: #f5a16d;

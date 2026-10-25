@@ -1,7 +1,7 @@
 /* Case-study styles are scoped away from the accepted homepage. */
 .case-main {
   width: 100%; max-width: none; padding: 0;
-  --case-ink: #161616; --case-muted: #616161; --case-blue: #1646e8;
+  --case-ink: #161616; --case-muted: #616161; --case-blue: var(--brand-blue);
   --case-line: #dedede; --case-dark: #15190f; --case-cream: #f5f0e6;
   background: #fff; color: var(--case-ink);
 }
@@ -111,16 +111,16 @@
 .case-next { display: flex; justify-content: space-between; align-items: flex-end; gap: 80px; padding-block: 76px 100px; border-top: 1px solid var(--case-line); }
 .case-next > p { font-size: clamp(36px, 3.5vw, 54px); line-height: 1.4; font-weight: 650; letter-spacing: -.03em; }
 .case-next > a { display: flex; align-items: center; justify-content: center; gap: 18px; min-height: 58px; margin-bottom: 8px; padding: 14px 28px; border-radius: 99px; background: var(--case-blue); color: #fff; font-size: 15px; transition: background-color 180ms, transform 180ms; white-space: nowrap; }
-.case-next > a:hover { background: #123ac2; transform: translateY(-3px); }
+.case-next > a:hover { background: var(--brand-blue-deep); transform: translateY(-3px); }
 .case-next svg { width: 20px; height: 20px; }
 .case-main + .footer { color: #666; }
 .case-main + .footer strong { color: #161616; }
-.case-main + .footer a:hover { color: #1646e8; }
+.case-main + .footer a:hover { color: var(--brand-blue); }
 .case-study--motion [data-case-reveal] { opacity: 0; transform: translateY(24px); transition: transform 800ms cubic-bezier(.16, 1, .3, 1), opacity 600ms ease-out; }
 .case-study--motion [data-case-reveal].is-visible { opacity: 1; transform: none; }
 .case-not-found { min-height: 80vh; padding: 200px 64px 100px; }
 .case-not-found h1 { font-size: 64px; }
-.case-not-found a { display: inline-block; margin-top: 40px; color: #1646e8; }
+.case-not-found a { display: inline-block; margin-top: 40px; color: var(--brand-blue); }
 @media (prefers-reduced-motion: reduce) {
   .case-study [data-case-reveal] { opacity: 1; transform: none; transition: none; }
 }
