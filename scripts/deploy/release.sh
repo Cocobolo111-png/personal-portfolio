@@ -65,6 +65,12 @@ curl --noproxy '*' --resolve "$domain:443:127.0.0.1" -fsS --retry 3 --retry-dela
 for path in / /work/traintrace /work/love-journal /work/ai-content-growth-os /work/ai-video-workbench /work/panliangxia; do
   curl --noproxy '*' --resolve "$domain:443:127.0.0.1" -fsS --max-time 15 "https://$domain$path" -o /dev/null
 done
+# New optional pages also receive an HTTPS check; older releases remain rollbackable.
+for route in story fun; do
+  if [[ -s "$target/$route/index.html" ]]; then
+    curl --noproxy '*' --resolve "$domain:443:127.0.0.1" -fsS --max-time 15 "https://$domain/$route" -o /dev/null
+  fi
+done
 touch "$target/.verified"
 if [[ -n "$old" && "$old" != "releases/$release" ]]; then
   ln -s "$old" "$base/.previous-next"

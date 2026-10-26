@@ -48,3 +48,10 @@ test-results/
 *.glb
 *.gltf
 *.mov
+
+# Public server configuration template; runtime secrets remain ignored.
+!server/ask-hy/.env.example
+.artifacts/
+
+# Local unfinished resume and review material
+.resume-review/

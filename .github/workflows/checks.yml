@@ -31,6 +31,8 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm test:ask-hy
+      - run: pnpm test:fun
       - run: pnpm build
       - run: node scripts/deploy/check-dist.mjs
       - run: node scripts/deploy/manifest.mjs

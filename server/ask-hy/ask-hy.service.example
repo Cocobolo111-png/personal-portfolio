@@ -1,0 +1,32 @@
+# Example only — not installed in this round.
+# /etc/systemd/system/ask-hy.service
+
+[Unit]
+Description=Ask HY V0.1 API (DeepSeek)
+After=network.target
+
+[Service]
+Type=simple
+User=ask-hy
+Group=ask-hy
+WorkingDirectory=/srv/ask-hy
+Environment=NODE_ENV=production
+EnvironmentFile=/etc/ask-hy.env
+ExecStart=/usr/bin/node /srv/ask-hy/server/ask-hy/server.mjs
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=10
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target
