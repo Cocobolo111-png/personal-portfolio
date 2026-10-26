@@ -1,5 +1,6 @@
 import { createHash, randomUUID } from 'node:crypto'
 import { createServer } from 'node:http'
+import { realpathSync } from 'node:fs'
 import { pathToFileURL } from 'node:url'
 import { getConfig, loadEnvFiles } from './config.mjs'
 import { knowledgeForPrompt, projectMap } from './knowledge.mjs'
@@ -509,7 +510,7 @@ export function startServer(config = getConfig()) {
   return server
 }
 
-const isEntry = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href
+const isEntry = process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href
 if (isEntry) {
   loadEnvFiles()
   startServer(getConfig())

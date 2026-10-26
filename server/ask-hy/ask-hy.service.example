@@ -1,4 +1,4 @@
-# Example only — not installed in this round.
+# Reference service; verify the Node executable path on the target host.
 # /etc/systemd/system/ask-hy.service
 
 [Unit]
@@ -9,10 +9,10 @@ After=network.target
 Type=simple
 User=ask-hy
 Group=ask-hy
-WorkingDirectory=/srv/ask-hy
+WorkingDirectory=/srv/ask-hy/current
 Environment=NODE_ENV=production
 EnvironmentFile=/etc/ask-hy.env
-ExecStart=/usr/bin/node /srv/ask-hy/server/ask-hy/server.mjs
+ExecStart=/usr/local/bin/node /srv/ask-hy/current/server/ask-hy/server.mjs
 Restart=on-failure
 RestartSec=3
 TimeoutStopSec=10
