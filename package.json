@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite --config vite.config.ts --host 0.0.0.0",
     "build": "tsc -b && vite build --config vite.config.ts && node scripts/build-pages.mjs",
-    "preview": "vite preview --config vite.config.ts --host 0.0.0.0"
+    "preview": "vite preview --config vite.config.ts --host 0.0.0.0",
+    "api": "node server/ask-hy/server.mjs",
+    "test:ask-hy": "node --test server/ask-hy/*.test.mjs",
+    "test:ask-hy:live": "node server/ask-hy/acceptance.mjs",
+    "test:fun": "node --experimental-strip-types --test tests/fun-rules.test.mjs"
   },
   "dependencies": {
     "@fontsource-variable/archivo": "^5.3.0",

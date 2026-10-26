@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { siteUrl } from '../paths'
 import { profile } from '../data/profile'
+import { siteUrl } from '../paths'
 
-export function Navbar({ homeHref = '', activePage }: { homeHref?: string; activePage?: 'resume' }) {
+export function Navbar({ homeHref = '', activePage }: { homeHref?: string; activePage?: 'story' | 'fun' | 'resume' }) {
   const [scrolled, setScrolled] = useState(false)
   const [notice, setNotice] = useState('')
 
@@ -23,16 +23,16 @@ export function Navbar({ homeHref = '', activePage }: { homeHref?: string; activ
   }, [notice])
 
   return (
-    <header className={`portfolio-nav ${activePage === 'resume' ? 'portfolio-nav--resume' : ''} ${scrolled ? 'portfolio-nav--scrolled' : ''}`}>
+    <header className={`portfolio-nav ${scrolled ? 'portfolio-nav--scrolled' : ''}${activePage === 'resume' ? ' portfolio-nav--resume' : activePage === 'story' ? ' portfolio-nav--story' : activePage === 'fun' ? ' portfolio-nav--fun' : ''}`}>
       <a className="personal-brand" href={`${homeHref}#top`} aria-label="何扬，返回首页顶部">
         <span className="personal-brand__mark" aria-hidden="true">hy</span>
         <span className="personal-brand__name">{profile.name}<span>{profile.romanName}</span></span>
       </a>
       <nav className="portfolio-nav__links" aria-label="主导航">
         <a href={`${homeHref}#work`} className="portfolio-nav__work">Work<span /></a>
-        <button type="button" aria-disabled="true" title="Play 将在阶段 B 开放" onClick={() => setNotice('Play 将在阶段 B 开放。')}>Play</button>
+        <a href={siteUrl('fun')} aria-current={activePage === 'fun' ? 'page' : undefined}>Fun</a>
         <a href={siteUrl('resume')} aria-current={activePage === 'resume' ? 'page' : undefined}>Résumé</a>
-        <button type="button" aria-disabled="true" title="Story 将在阶段 B 开放" onClick={() => setNotice('Story 将在阶段 B 开放。')}>Story</button>
+        <a href={siteUrl('story')} aria-current={activePage === 'story' ? 'page' : undefined}>Story</a>
         {profile.githubUrl && <a href={profile.githubUrl} target="_blank" rel="noreferrer">GitHub</a>}
       </nav>
       <p className="portfolio-nav__notice" role="status">{notice}</p>

@@ -1,0 +1,24 @@
+# Example only — do not apply to production without review.
+# Merge this API handle into the existing site; preserve existing cache/security headers.
+# Place this handle before the static file handle in the site block.
+
+create.byheyang.cn {
+  encode zstd gzip
+
+  handle /api/ask-hy* {
+    request_body {
+      max_size 32KB
+    }
+    reverse_proxy 127.0.0.1:8787 {
+      # Caddy overwrites the client-supplied value with the real peer address.
+      header_up X-Real-IP {remote_host}
+      header_up -X-Forwarded-For
+    }
+  }
+
+  handle {
+    root * /srv/www/sites/portfolio/current
+    file_server
+    try_files {path} {path}/index.html
+  }
+}

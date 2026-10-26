@@ -30,6 +30,6 @@ const base=process.env.RESUME_TEST_URL || 'http://127.0.0.1:4178/';const review=
   await page.locator('h1').click();await page.screenshot({path:path.join(review,`${base.includes('personal-portfolio')?'resume-pages':'resume'}-${width}.png`),fullPage:true});await page.close()
  }
  const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'})
- for(const route of ['', 'work/traintrace','work/ai-content-growth-os']){await page.goto(base+route,{waitUntil:'networkidle'});ok(`existing ${route||'home'} retained`,await page.locator('.resume-page').count()===0);ok(`existing ${route||'home'} loaded`,!await page.getByText('这个案例还没上架。').count())}
+ for(const route of ['', 'story', 'fun', 'work/traintrace','work/ai-content-growth-os']){await page.goto(base+route,{waitUntil:'networkidle'});ok(`existing ${route||'home'} retained`,await page.locator('.resume-page').count()===0);ok(`existing ${route||'home'} loaded`,!await page.getByText('这个案例还没上架。').count())}
  ok('no browser exceptions',errors.length===0);await browser.close();fs.writeFileSync(path.join(review,base.includes('personal-portfolio')?'browser-pages.json':'browser-root.json'),JSON.stringify({base,checks,errors,passed:checks.length},null,2));console.log(JSON.stringify({passed:checks.length,errors}))
 })().catch(e=>{console.error(e);process.exit(1)})

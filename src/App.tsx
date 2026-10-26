@@ -5,14 +5,18 @@ import { Navbar } from './components/Navbar'
 import { HeroSection } from './sections/HeroSection'
 import { WorkSection } from './sections/WorkSection'
 import { ProjectCaseStudy } from './sections/ProjectCaseStudy'
+import { FunPage } from './sections/FunPage'
+import { StoryPage } from './sections/StoryPage'
 import { projects } from './data/projects'
 import { siteUrl } from './paths'
 
 export default function App() {
   const pathname = window.location.pathname.replace(/\/+$/, '') || '/'
   const project = projects.find(item => item.caseStudy && item.caseStudyUrl === pathname)
-  const isResume = pathname === siteUrl('resume')
   const isHome = pathname === siteUrl().replace(/\/$/, '') || pathname === '/'
+  const isResume = pathname === siteUrl('resume')
+  const isFun = pathname === siteUrl('fun')
+  const isStory = pathname === siteUrl('story')
   useLayoutEffect(() => {
     const previousRestoration = history.scrollRestoration
     history.scrollRestoration = 'manual'
@@ -54,9 +58,9 @@ export default function App() {
   return (
     <>
       <a className="skip-link" href="#main-content">跳到主要内容</a>
-      <Navbar homeHref={isHome ? '' : siteUrl()} activePage={isResume ? 'resume' : undefined} />
-      <main id="main-content" className={isResume ? 'resume-main' : isHome ? undefined : 'case-main'}>
-        {isResume ? <ResumePage /> : isHome ? <><HeroSection /><WorkSection /></> : project ? <ProjectCaseStudy project={project} /> : (
+      <Navbar homeHref={isHome ? '' : siteUrl()} activePage={isResume ? 'resume' : isFun ? 'fun' : isStory ? 'story' : undefined} />
+      <main id="main-content" className={isResume ? 'resume-main' : isFun ? 'fun-main' : isStory ? 'story-main' : isHome ? undefined : 'case-main'}>
+        {isResume ? <ResumePage /> : isHome ? <><HeroSection /><WorkSection /></> : isFun ? <FunPage /> : isStory ? <StoryPage /> : project ? <ProjectCaseStudy project={project} /> : (
           <section className="case-not-found"><h1>这个案例还没上架。</h1><a href={siteUrl('#work')}>返回全部项目</a></section>
         )}
       </main>
