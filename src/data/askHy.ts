@@ -74,4 +74,3 @@ export function disclaimerFor(kind: AskKind): string | undefined {
   if (kind === 'safety') return '这类信息不在公开范围。'
   return undefined
 }
-
