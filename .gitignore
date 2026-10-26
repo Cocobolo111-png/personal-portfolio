@@ -48,3 +48,5 @@ test-results/
 *.glb
 *.gltf
 *.mov
+
+.resume-review/

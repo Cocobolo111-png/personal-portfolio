@@ -12,6 +12,12 @@
 
 因此，网站用五个可切换的个人章节建立第一印象，再把主要篇幅留给作品。项目案例连接问题、体验、实现与反思，让视觉与交互帮助阅读，而不是替代内容本身。
 
+## Resume · 履历
+
+[在线履历](https://create.byheyang.cn/resume) · [一页 PDF](https://create.byheyang.cn/resume/he-yang-resume.pdf)
+
+V2.2 使用共享履历数据呈现内容增长、课程商业化与 AI 产品实践。保持原 V2 真实照片和 A4 单页布局；维护与验收方法见 [Resume 文档](docs/resume/README.md)。
+
 ## Selected Work · 已收录的代表项目
 
 以下三个项目均已出现在当前线上作品集中。案例页介绍产品与实践过程，产品体验入口另行标注。

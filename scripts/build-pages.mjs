@@ -16,6 +16,9 @@ for (const [, route, title] of routes) {
   await mkdir(`dist/${route}`, { recursive: true })
   await writeFile(`dist/${route}/index.html`, page(route, `${title} — 何扬作品集`))
 }
+await mkdir('dist/resume', { recursive: true })
+await writeFile('dist/resume/index.html', page('resume', 'Resume — 何扬'))
+await import('./check-resume.mjs')
 await writeFile('dist/robots.txt', `User-agent: *\nAllow: /\nSitemap: ${origin}${base}sitemap.xml\n`)
-await writeFile('dist/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['', ...routes.map(match => match[1])].map(route => `<url><loc>${escape(`${origin}${base}${route}`)}</loc></url>`).join('')}</urlset>\n`)
+await writeFile('dist/sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['', 'resume', ...routes.map(match => match[1])].map(route => `<url><loc>${escape(`${origin}${base}${route}`)}</loc></url>`).join('')}</urlset>\n`)
 console.log(`Static entries: ${routes.length} case routes`)

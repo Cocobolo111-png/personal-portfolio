@@ -1,0 +1,163 @@
+{
+  "version": "2.2",
+  "updated": "2026-10-26",
+  "profile": {
+    "name": "何扬",
+    "romanName": "HE YANG",
+    "direction": "AI Product · Operations · Growth",
+    "graduation": "2027届本科毕业生",
+    "summary": "兼具内容增长与AI产品实践：独立运营10万+粉丝教育账号，单条最高播放470万+，个人账号课程单月GMV峰值约10万元。持续将实际业务需求转化为AI工作流和可运行产品，完成需求设计、API验证、功能交付与体验迭代。",
+    "email": "cocobolo_111@icloud.com",
+    "github": "https://github.com/Cocobolo111-png",
+    "portfolio": "https://create.byheyang.cn",
+    "pdfPath": "resume/he-yang-resume.pdf"
+  },
+  "experiences": [
+    {
+      "id": "dingchen",
+      "title": "天津丁尘文化传媒",
+      "subtitle": "课程产品与内容运营",
+      "period": "2025.04 — 2025.10",
+      "bullets": [
+        {
+          "id": "dingchen.1",
+          "text": "课程产品：参与知识付费课程体系与内容设计，围绕TikTok、短视频、直播及WhatsApp私域等运营场景组织教学内容。"
+        },
+        {
+          "id": "dingchen.2",
+          "text": "渠道获客：参与抖音、小红书获客策略优化，推动内容引流与用户咨询流程改进，项目推广渠道单日新增微信线索峰值50+。"
+        },
+        {
+          "id": "dingchen.3",
+          "text": "课程交付：结合线下教学与用户反馈优化课程内容和交付方式，使教学内容对应实际运营场景。",
+          "pdfOmit": true
+        }
+      ]
+    },
+    {
+      "id": "k12",
+      "title": "@晓羊学长",
+      "subtitle": "K12 教育内容个人 IP",
+      "role": "独立主理人 / 内容增长与商业化",
+      "period": "2023.09 — 2024.12",
+      "bullets": [
+        {
+          "id": "k12.1",
+          "text": "内容增长：从0到1运营教育内容IP，独立完成账号定位、选题策划、内容生产与数据复盘，6个月全平台累计粉丝10万+，单条视频最高播放470万+。"
+        },
+        {
+          "id": "k12.2",
+          "text": "商业转化：搭建“短视频触达—私域承接—课程咨询—成交”链路，以社群运营和微信一对一沟通推动销售，个人账号课程单月GMV峰值约10万元。"
+        },
+        {
+          "id": "k12.3",
+          "text": "营销迭代：结合用户咨询与成交反馈优化推广策略，累计完成50+套课程海报及营销素材。"
+        }
+      ],
+      "cooperation": {
+        "title": "杭州树成林教育科技集团有限公司",
+        "subtitle": "新媒体运营 / 远程合作",
+        "period": "2023.09 — 2024.12",
+        "text": "围绕K12课程开展推广内容制作、用户咨询与私域运营，参与课程推广及分销合作。",
+        "note": "",
+        "pdfText": "新媒体运营 / 远程合作（2023.09—2024.12）：围绕K12课程开展推广内容制作、用户咨询与私域运营，参与课程推广及分销合作。"
+      }
+    }
+  ],
+  "projects": [
+    {
+      "id": "traintrace",
+      "title": "TrainTrace",
+      "subtitle": "AI 智能训练记录与反馈产品",
+      "period": "2026.08 — 至今",
+      "role": "独立产品负责人",
+      "casePath": "work/traintrace",
+      "bullets": [
+        {
+          "id": "traintrace.1",
+          "text": "产品交付：独立推进训练记录Web产品从需求定义到功能交付，构建逐组记录、历史训练对比及智能反馈的核心使用流程。"
+        },
+        {
+          "id": "traintrace.2",
+          "text": "AI集成：设计训练数据结构与模型输入逻辑，接入DeepSeek API并完成真实调用验证，生成基于历史训练表现的分析与可执行反馈。"
+        },
+        {
+          "id": "traintrace.3",
+          "text": "体验迭代：组织多轮功能验收与移动端体验优化，迭代训练录入、数据导入、组间计时及反馈呈现等关键功能。"
+        }
+      ],
+      "boundary": ""
+    },
+    {
+      "id": "growth",
+      "title": "AI Content Growth OS",
+      "subtitle": "AI 内容增长与工作流实践",
+      "period": "2026.09 — 至今",
+      "role": "独立产品负责人",
+      "casePath": "work/ai-content-growth-os",
+      "bullets": [
+        {
+          "id": "growth.2",
+          "text": "工作流落地：通过Prompt、Skill与结构化输出组织多阶段内容生产，将创作准备、人工审核和结果留存纳入可复用流程。"
+        },
+        {
+          "id": "growth.3",
+          "text": "评估迭代：设计七维内容评估规则，结合历史内容表现分析评分偏差，持续调整选题判断、内容分析与审核规则。"
+        }
+      ],
+      "boundary": ""
+    }
+  ],
+  "skills": [
+    {
+      "title": "Growth & Operations",
+      "pdfTitle": "增长与运营",
+      "items": [
+        "用户洞察",
+        "内容策略",
+        "短视频策划",
+        "社群与私域运营",
+        "用户转化",
+        "内容效果复盘"
+      ]
+    },
+    {
+      "title": "AI & Workflow",
+      "pdfTitle": "AI与工作流",
+      "items": [
+        "LLM 应用设计",
+        "Prompt Engineering",
+        "Skill 工作流",
+        "结构化输出",
+        "API 接入测试",
+        "人机协作流程设计"
+      ]
+    },
+    {
+      "title": "Product & Execution",
+      "pdfTitle": "产品与执行",
+      "items": [
+        "需求拆解",
+        "产品原型",
+        "Web 与 H5 产品实践",
+        "GitHub 版本管理",
+        "功能测试",
+        "产品验收",
+        "迭代复盘"
+      ]
+    }
+  ],
+  "education": {
+    "school": "天津中德应用技术大学",
+    "major": "飞行器制造工程",
+    "degree": "本科",
+    "period": "2023.09 — 2027.06",
+    "note": "预计毕业",
+    "honors": [
+      "大学英语六级 CET-6",
+      "2025年创新创业赛事天津市银奖",
+      "2025年大学生创新训练计划国家级立项",
+      "第二届航空国际化英语能力竞赛国家优秀奖"
+    ]
+  }
+}
