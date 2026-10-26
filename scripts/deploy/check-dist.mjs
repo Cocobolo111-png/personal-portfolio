@@ -2,7 +2,7 @@ import { readFile, access } from 'node:fs/promises'
 const base = process.env.PORTFOLIO_BASE || '/'
 const origin = process.env.PORTFOLIO_ORIGIN || 'https://cocobolo111-png.github.io'
 const source = await readFile('src/data/projects.ts', 'utf8')
-const routes = ['', 'story', 'fun', ...[...source.matchAll(/caseStudyUrl: siteUrl\('(work\/[^']+)'\)/g)].map(match => match[1])]
+const routes = ['', 'story', 'fun', 'resume', ...[...source.matchAll(/caseStudyUrl: siteUrl\('(work\/[^']+)'\)/g)].map(match => match[1])]
 for (const route of routes) {
   const html = await readFile(`dist/${route ? `${route}/` : ''}index.html`, 'utf8')
   if (!html.includes(`href="${origin}${base}${route}"`)) throw new Error(`Wrong canonical: ${route}`)

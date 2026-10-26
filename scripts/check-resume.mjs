@@ -1,0 +1,17 @@
+import { readFile } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+const sha = data => createHash('sha256').update(data).digest('hex')
+const source = await readFile('src/data/resume.json')
+const resume = JSON.parse(source)
+const manifest = JSON.parse(await readFile('public/resume/manifest.json', 'utf8'))
+if (sha(source) !== manifest.data_sha256) throw new Error('Resume data changed: run scripts/export-public-resume.py before building')
+const pdf = await readFile(`public/${resume.profile.pdfPath}`)
+if (sha(pdf) !== manifest.pdf_sha256 || !pdf.subarray(0, 5).equals(Buffer.from('%PDF-'))) throw new Error('Resume PDF is stale or invalid')
+const built = await readFile(`dist/${resume.profile.pdfPath}`)
+if (sha(built) !== manifest.pdf_sha256) throw new Error('Built PDF differs from verified source')
+const projects = await readFile('src/data/projects.ts', 'utf8')
+for (const p of resume.projects) if (!projects.includes(`siteUrl('${p.casePath}')`)) throw new Error(`Resume case does not exist: ${p.casePath}`)
+if (resume.experiences.map(e => e.id).join() !== 'dingchen,k12') throw new Error('Resume experience order must remain reverse chronological')
+if (!resume.experiences.find(e => e.id === 'k12')?.cooperation?.title.includes('杭州树成林')) throw new Error('Missing linked cooperation')
+if (JSON.stringify(resume).includes('18270896361')) throw new Error('Public resume data must not expose the full phone number')
+console.log('Verified shared Resume data, PDF hashes, source cases and experience relationships')

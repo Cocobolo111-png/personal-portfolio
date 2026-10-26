@@ -1,0 +1,10 @@
+{
+  "pages": 1,
+  "a4": true,
+  "text_searchable": 1461,
+  "real_headshot": true,
+  "data_sha256": "db2989e38ef9aca18351c30897f327e74433a6690ca2cff757a908af4603c4ab",
+  "pdf_sha256": "689865a2ac7b74b318f63c639783fe72dd6ff616a94a7cf0fd2e87d2d908c5bc",
+  "template_sha256": "5037130225ee5683abce000972800ba1b707ca9d964a0658f2f5db8ebeff9e3f",
+  "phone_public": false
+}
