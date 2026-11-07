@@ -9,24 +9,32 @@ const media = (file: string) => siteUrl(`fun/${file}`)
 type Preview = 'beads' | 'journal' | 'jobflow' | 'next-round' | 'time-planning'
 const demoMatches: Outcome[] = ['loss', 'loss', 'win', 'loss', 'win']
 
-function Clip({ src, poster, label, className = '' }: { src: string; poster: string; label: string; className?: string }) {
+function Clip({ src, poster, cover, coverMobile, coverAlt, label, className = '' }: { src: string; poster: string; cover: string; coverMobile?: string; coverAlt: string; label: string; className?: string }) {
   const ref = useRef<HTMLVideoElement>(null)
+  const [playing, setPlaying] = useState(false)
   const play = () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const video = ref.current
     if (video && !video.src) { video.src = src; video.load() }
     void video?.play().catch(() => {})
   }
-  const pause = () => { const video = ref.current; if (!video) return; video.pause(); video.removeAttribute('src'); video.load() }
+  const pause = () => { setPlaying(false); const video = ref.current; if (!video) return; video.pause(); video.removeAttribute('src'); video.load() }
   useEffect(() => {
     const video = ref.current
     if (!video) return
     const observer = new IntersectionObserver(([entry]) => { if (!entry.isIntersecting) pause() })
     observer.observe(video)
-    return () => observer.disconnect()
-  }, [])
-  return <div className={`fun-clip ${className}`} onPointerEnter={play} onPointerLeave={pause} onFocus={play} onBlur={pause}>
-    <video ref={ref} poster={poster} muted playsInline preload="none" aria-label={label} />
+    const button = video.closest('button')
+    button?.addEventListener('focus', play)
+    button?.addEventListener('blur', pause)
+    return () => { observer.disconnect(); button?.removeEventListener('focus', play); button?.removeEventListener('blur', pause) }
+  }, [src])
+  return <div className={`fun-clip ${playing ? 'fun-clip--playing' : ''} ${className}`} onPointerEnter={play} onPointerLeave={pause}>
+    <picture className="fun-clip__cover" aria-hidden={playing}>
+      {coverMobile && <source media="(max-width: 640px)" srcSet={coverMobile} />}
+      <img src={cover} alt={coverAlt} loading="lazy" />
+    </picture>
+    <video ref={ref} poster={poster} muted playsInline preload="none" aria-label={label} onPlaying={() => setPlaying(true)} onPause={() => setPlaying(false)} onError={() => setPlaying(false)} />
     <span className="fun-media-note" aria-hidden="true">Hover to play <span>↗</span></span>
   </div>
 }
@@ -108,11 +116,11 @@ export function FunPage() {
         <div className="fun-ask__copy"><h2 id="fun-ask-title">Ask HY<span>?</span></h2><p>一个了解我作品的 AI，<br />偶尔也会替我想些奇怪的问题。</p><button type="button" ref={triggerRef} className="fun-ask__cta" onClick={() => setOpen(true)}>和它聊聊 <ArrowIcon /></button><small>不是本人。公开事实、AI 推测，会分开说。</small></div>
         <button type="button" className="fun-ask__preview" aria-label="打开 Ask HY 真实对话面板" onClick={() => setOpen(true)}><img src={media('ask-hy-live.webp')} alt="Ask HY 真实对话：先有鸡还是先有蛋，回答标注 AI 推测" width="420" height="764" /><span>一段真实对话。接下来，轮到你。</span></button>
       </article>
-      <GalleryCard id="beads" title="盘两下" description="手上没串？屏幕里也能盘两下。" kind="Interactive Toy" action="看它动起来" onOpen={show} className="fun-card--beads"><Clip src={media('panliangxia.mp4')} poster={media('panliangxia-stage.webp')} label="盘两下真实盘串录像" /></GalleryCard>
-      <GalleryCard id="journal" title="Love Journal" description="给两个人的回忆，留一个可以走进去的地方。" kind="Personal Website" action="走进去看看" onOpen={show} className="fun-card--journal"><Clip src={siteUrl('projects/love-journal/portal-walkthrough.webm')} poster={siteUrl('projects/love-journal/hero.jpg')} label="Love Journal 真实植物入口穿越录像" /></GalleryCard>
-      <GalleryCard id="jobflow" title="JobFlow" description="投简历这件事，能不能少做一点重复劳动？" kind="Local Tool" action="看看真实流程" onOpen={show} className="fun-card--jobflow"><img src={media('jobflow-board.webp')} alt="JobFlow 的岗位管理，两个虚构岗位的演示记录" width="1440" height="1000" loading="lazy" /><span className="fun-cover-note">收藏 → 关联简历 → 辅助填写 → 自己提交</span></GalleryCard>
-      <GalleryCard id="next-round" title="下一把" description="王者胜率实验。玄学归玄学，先看清上一把。" kind="Playable Demo" action="换个战绩试试" onOpen={show} className="fun-card--game"><img src={media('next-round-report.webp')} alt="下一把原项目的娱乐状态报告，使用已标注的测试战绩" width="540" height="2074" loading="lazy" /><span className="fun-game-sticker">不包赢。<br />可以玩。</span></GalleryCard>
-      <GalleryCard id="time-planning" title="时间规划实验" description="把散落的时间，重新摆在眼前。" kind="Time Experiment" action="看时间如何被安排" onOpen={show} className="fun-card--time"><Clip src={media('time-planning.mp4')} poster={media('time-planning.webp')} label="Growth OS 真实示例时间块和编辑录像" /><span className="fun-cover-note">原项目 Growth OS · 示例周 / 本地时间块</span></GalleryCard>
+      <GalleryCard id="beads" title="盘两下" description="手上没串？屏幕里也能盘两下。" kind="Interactive Toy" action="看它动起来" onOpen={show} className="fun-card--beads"><Clip src={media('panliangxia.mp4')} poster={media('panliangxia-stage.webp')} cover={media('covers/beads-square.webp')} coverAlt="绛红木珠与蓝绳，单珠连接成环的手串" label="盘两下真实盘串录像" /></GalleryCard>
+      <GalleryCard id="journal" title="Love Journal" description="给两个人的回忆，留一个可以走进去的地方。" kind="Personal Website" action="走进去看看" onOpen={show} className="fun-card--journal"><Clip src={siteUrl('projects/love-journal/portal-walkthrough.webm')} poster={siteUrl('projects/love-journal/hero.jpg')} cover={media('covers/journal.webp')} coverAlt="深绿植物纸拱门，通向粉紫暮色中的山谷" label="Love Journal 真实植物入口穿越录像" /></GalleryCard>
+      <GalleryCard id="jobflow" title="JobFlow" description="投简历这件事，能不能少做一点重复劳动？" kind="Local Tool" action="看看真实流程" onOpen={show} className="fun-card--jobflow"><img src={media('covers/jobflow.webp')} alt="蓝色纸带穿过白色信封，连接求职投递流程" width="1536" height="1024" loading="lazy" /></GalleryCard>
+      <GalleryCard id="next-round" title="下一把" description="王者胜率实验。玄学归玄学，先看清上一把。" kind="Playable Demo" action="换个战绩试试" onOpen={show} className="fun-card--game"><img src={media('covers/next-round.webp')} alt="尚未落定的红蓝圆片与长阴影，下一把的悬念" width="1536" height="1024" loading="lazy" /></GalleryCard>
+      <GalleryCard id="time-planning" title="时间规划实验" description="把散落的时间，重新摆在眼前。" kind="Time Experiment" action="看时间如何被安排" onOpen={show} className="fun-card--time"><Clip src={media('time-planning.mp4')} poster={media('time-planning.webp')} cover={media('covers/time-wide.webp')} coverMobile={media('covers/time-mobile.webp')} coverAlt="手将蓝色短纸条放入橙蓝时间块之间的空位" label="Growth OS 真实示例时间块和编辑录像" /></GalleryCard>
     </div>
     <footer className="fun-end fun-wrap"><p>有些想法，<br />做出来就已经很好玩。</p><a href={siteUrl('#work')}>回去看看正经作品 <ArrowIcon /></a></footer>
     {open && <AskHyPanel messages={chat.messages} status={chat.status} error={chat.error} mode={chat.mode} onSend={text => { void chat.send(text) }} onRetry={chat.retry} onClose={() => setOpen(false)} returnFocusRef={triggerRef} />}
